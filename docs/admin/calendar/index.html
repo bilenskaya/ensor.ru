@@ -1,0 +1,42 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_calendar.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=='calendar_save') {	form_calendar_save();	header("location:index.html"); exit(); }
+//	if ($_REQUEST['action']=='calendar_enable') { status_change('news', 'enable', 'Yes|No', $_REQUEST['id']); header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='calendar_main_enable') { status_change('events', 'enable', 'Yes|No', $_REQUEST['id']); header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='calendar_delete') { del_record('events', $_REQUEST['id'], 'No', -1); del_dir($path."files/news/".$_REQUEST['id']);del_file($path."/files/news/imgs/".$_REQUEST['id'].".jpg");del_file($path."/files/news/imgs/".$_REQUEST['id'].".gif");del_file($path."/files/news/thumbs/".$_REQUEST['id'].".jpg");del_file($path."/files/news/thumbs/".$_REQUEST['id'].".gif"); header("location:index.html"); exit(); }
+}
+
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+echo "<h1>События</h1>";
+
+calendar_show();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=="calendar_add" || $_REQUEST['action']=="calendar_edit") { include ("form_calendar.inc"); }
+	if ($_REQUEST['action']=="calendar_images") { include ("form_calendar_images.inc"); }
+}
+
+sql_close();
+
+?>
+</body>
+</html>

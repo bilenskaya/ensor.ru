@@ -1,0 +1,94 @@
+<?php
+require_once("../../fns/config.php");
+require_once("../fns/admin_common.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+?>
+<html>
+<head>
+	<title>Система управления сайтом</title>
+	<meta name="KeyWords" content="">
+	<meta name="Description" content="">
+	<link rel="stylesheet" type="text/css" href="/admin/styles.css">
+</head>
+<body><a name="top"></a>
+
+<?php require_once("../menu.inc"); ?>
+
+<br><br><br><br>
+<ul>
+	<li><a href="#img">Вставка изображений</a></li>
+	<li><a href="#link">Вставка ссылок</a></li>
+</ul>
+
+<br><br><br>
+<br><br><hr size=1><br><br>
+<a name=img></a>
+<h2>Вставка изображений</h2>
+<table cellpadding=10 cellspacing=0 border=0>
+	<tr>
+		<td>1. Подготовить на своем компьютере изображения к вставке на сайт.<br>
+				Основные требования:<br>
+				Формат: jpg, размер: не более 2 Мб
+		</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>2. Нажать на кнопку, указанную на рисунке:</td>
+		<td><img src="helpimg/img1.gif" alt="" width="333" height="78" border="1"></td>
+	</tr>
+	<tr>
+		<td>3. Загрузить изображение со своего компьютера на интернет-сервер при помощи следующей формы:</td>
+		<td><img src="helpimg/img2.gif" alt="" width="333" height="96" border="1"></td>
+	</tr>
+	<tr>
+		<td>4. Перейти в режим редактирования страницы, установить курсор в то место, куда будет вставляться изображение и нажать на указанную кнопку.</td>
+		<td><img src="helpimg/img3.gif" alt="" width="333" height="196" border="1"></td>
+	</tr>
+	<tr>
+		<td>5. В открывшемся окне выбрать нужное изображение, нажать на него для вставки специального кода, а затем нажать "ОК"</td>
+		<td><img src="helpimg/img4.gif" alt="" width="333" height="338" border="1"></td>
+	</tr>
+	<tr>
+		<td>6. Сохранить страницу, нажав кнопку "Сохранить"</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+
+<br><br><hr size=1><br><br>
+
+<a name=link></a>
+<h2>Вставка ссылок</h2>
+<table cellpadding=10 cellspacing=0 border=0>
+	<tr>
+		<td>1. Открыть сайт (или страницу своего сайта), на который необходимо установить ссылку и скопировать адрес страницы в буфер обмена Windows.</td>
+		<td><img src="helpimg/link1.gif" alt="" width="333" height="196" border="1"></td>
+	</tr>
+	<tr>
+		<td>2. В режиме редактирования страницы выделить текст, который будет являться ссылкой и нажать на указанную кнопку:</td>
+		<td><img src="helpimg/link2.gif" alt="" width="333" height="132" border="1"></td>
+	</tr>
+	<tr>
+		<td>3. В открывшемся окне вставить ссылку из буфера обмена Windows и нажать "ОК"</td>
+		<td><img src="helpimg/link3.gif" alt="" width="333" height="251" border="1"></td>
+	</tr>
+	<tr>
+		<td>4. Сохранить страницу, нажав кнопку "Сохранить"</td>
+		<td></td>
+	</tr>
+</table>
+ 
+
+
+
+
+
+
+
+
+<?php sql_close();?>
+</body>
+</html>

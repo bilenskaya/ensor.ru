@@ -1,0 +1,46 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_articles.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=='articles_save') {	form_articles_save();	header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='articles_enable') { status_change('articles', 'enable', 'Yes|No', $_REQUEST['id']); header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='articles_delete') { del_record('articles', $_REQUEST['id'], 'No', -1); del_dir($path."files/articles/".$_REQUEST['id']); del_file($path."/files/articles/imgs/".$_REQUEST['id'].".jpg");del_file($path."/files/articles/imgs/".$_REQUEST['id'].".gif");del_file($path."/files/articles/thumbs/".$_REQUEST['id'].".jpg");del_file($path."/files/articles/thumbs/".$_REQUEST['id'].".gif"); header("location:index.html"); exit(); }
+
+	if ($_REQUEST['action']=='articles_mainimg_del') { del_file($path."/files/articles/imgs/".$_REQUEST['fname']); del_file($path."/files/articles/thumbs/".$_REQUEST['fname']); header("location:?id=".$_REQUEST['id']."&action=articles_edit#articles_edit"); exit(); }
+	
+	if ($_REQUEST['action']=='articles_images_save') { form_articles_images_save(); header("location:?id=".$_REQUEST['id']."&action=articles_images#articles_images"); exit(); }
+	if ($_REQUEST['action']=='articles_images_del') { del_file($path."/files/articles/".$_REQUEST['id']."/".$_REQUEST['fname']); del_empty_dir($path."/files/articles/".$_REQUEST['id']); header("location:?id=".$_REQUEST['id']."&action=articles_images#articles_images"); exit(); }
+}
+
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+echo "<h1>Статьи</h1>";
+
+articles_show();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=="articles_add" || $_REQUEST['action']=="articles_edit") { include ("form_articles.inc"); }
+	if ($_REQUEST['action']=="articles_images") { include ("form_articles_images.inc"); }
+}
+
+sql_close();
+
+?>
+</body>
+</html>

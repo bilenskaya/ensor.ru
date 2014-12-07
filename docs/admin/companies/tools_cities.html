@@ -1,0 +1,62 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_companies.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+
+
+
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+$sql_query="SELECT name FROM region WHERE country_id='3159' ORDER BY name";
+$sql_res=mysql_query($sql_query, $conn_id);
+if (mysql_num_rows($sql_res)>0)
+{
+	while (list($name)=mysql_fetch_row($sql_res))
+	{
+       	$sql_query="INSERT INTO ".$sql_pref."_regions (name) VALUES ('".$name."')";
+       	$sql_res_1=mysql_query($sql_query, $conn_id);
+    }
+}
+
+       
+$sql_query="SELECT name, region_id FROM city WHERE country_id='3159' ORDER BY name";
+$sql_res=mysql_query($sql_query, $conn_id);
+if (mysql_num_rows($sql_res)>0)
+{
+	while (list($name, $region_id)=mysql_fetch_row($sql_res))
+	{
+
+        $sql_query="SELECT name FROM region WHERE region_id='".$region_id."'";
+        $sql_res_1=mysql_query($sql_query, $conn_id);
+        list($region_name)=mysql_fetch_row($sql_res_1);
+        
+
+        $sql_query="SELECT id FROM ".$sql_pref."_regions WHERE name='".$region_name."'";
+        $sql_res_1=mysql_query($sql_query, $conn_id);
+        list($reg_id)=mysql_fetch_row($sql_res_1);
+        
+
+       	$sql_query="INSERT INTO ".$sql_pref."_cities (name, region_id) VALUES ('".$name."', '".$reg_id."')";
+       	$sql_res_1=mysql_query($sql_query, $conn_id);
+    }
+}
+
+     
+
+sql_close();
+?>
+</body>
+</html>

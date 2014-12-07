@@ -1,0 +1,109 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_maillist.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+?>
+<html>
+<?php html_head(); ?>
+<body>
+<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
+
+
+<tr>
+<td valign="middle" height="100%" align=center>
+
+	<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
+		<tr>
+			<td width="10" height="100%"><img src="/img/empty.gif" alt="" width="10" height="1" border="0"></td>
+			<td height="100%" valign="middle" align=center>
+				
+
+
+<?
+
+$sql_query="SELECT ".$sql_pref."_mail_letters.id, name, content, email FROM ".$sql_pref."_mail_letters INNER JOIN ".$sql_pref."_mail_address ON ".$sql_pref."_mail_letters.email_id=".$sql_pref."_mail_address.id  WHERE ".$sql_pref."_mail_letters.id='".$_REQUEST['id']."'";
+//echo $sql_query;
+$sql_res=mysql_query($sql_query, $conn_id);
+if (mysql_num_rows($sql_res)>0)
+{
+	list($letter_id, $letter_name, $letter_content, $mail_from)=mysql_fetch_row($sql_res);
+	$letter_name=stripslashes($letter_name); $letter_content=stripslashes($letter_content);
+    if ($mail_from=="") {$mail_from="robot";}
+    $letter_content_send="<html><head><title>".$letter_name."</title></head><body>".$letter_content."</body></html>";
+}
+
+
+
+$sql_query="SELECT id FROM ".$sql_pref."_mail_subscribers WHERE letter_id='".$_REQUEST['id']."'&&dt_send<>'0000-00-00 00:00:00'";
+$sql_res=mysql_query($sql_query, $conn_id);
+$letters_sended_num=mysql_num_rows($sql_res);
+
+$sql_query="SELECT id FROM ".$sql_pref."_mail_subscribers WHERE letter_id='".$_REQUEST['id']."'";
+$sql_res=mysql_query($sql_query, $conn_id);
+$letters_sendall_num=mysql_num_rows($sql_res);
+
+$sql_query="SELECT id, name, email FROM ".$sql_pref."_mail_subscribers WHERE letter_id='".$_REQUEST['id']."'&&dt_send='0000-00-00 00:00:00' ORDER BY name";
+$sql_res=mysql_query($sql_query, $conn_id);
+$letters_tosend_num=mysql_num_rows($sql_res);
+if (mysql_num_rows($sql_res)>0)
+{
+    list($id, $name, $email)=mysql_fetch_row($sql_res);
+    
+    $name=stripslashes($name); 
+    $name=str_replace('"','',$name);$name=str_replace('»','',$name);$name=str_replace('«','',$name);
+    
+    
+    if (!empty($name)) $toemail="".$name." <".$email.">";
+    else $toemail=$email;
+    
+	$mailheader="";
+	$mailheader.="From: Ensor.ru <".$mail_from."@".$path_domen.">\r\n";
+    //if (!empty($name)) $mailheader.="To: ".$name." <".$email.">\r\n";
+	$mailheader.="MIME-Version: 1.0\r\n";
+    $mailheader.="Content-Type: text/html;\n charset=\"WINDOWS-1251\"";
+    //echo $mailheader;
+    if(mail($toemail, $letter_name, $letter_content_send, $mailheader))
+    {
+        $dt_send=date("Y-m-d H:i:s");
+        
+		$sql_query="UPDATE ".$sql_pref."_mail_subscribers SET dt_send='".$dt_send."' WHERE id='".$id."'";
+		$sql_res_1=mysql_query($sql_query, $conn_id);
+        
+        $res="".$name." (".$email.")";
+    }
+    else 
+    {
+        $res="Ошибка отправки письма";
+    }
+    
+    echo "<div style='padding: 10 0;'>".$letters_sended_num." / ".$letters_sendall_num."</div>";
+    echo "<div style='padding: 10 0;'>".$res."</div>";
+    
+}
+else 
+{
+    echo "<h2>Рассылка завершена</h2>";
+}
+echo "<div style='padding: 10 0;'><a href='index.html?id=".$_REQUEST['id']."&action=subscribers_show'>Вернуться</a></div>";
+
+$randtime=rand(2000,5000);
+echo "<script language='JavaScript'>window.setTimeout(\"document.location.href='send.html?id=".$_REQUEST['id']."'\", ".$randtime.")</script>";
+
+
+?>
+
+			</td>
+			<td width="10" height="100%"><img src="/img/empty.gif" alt="" width="10" height="1" border="0"></td>
+		</tr>
+	</table>
+</td>
+</tr>
+</table>
+<? sql_close(); ?>
+</body>
+</html>

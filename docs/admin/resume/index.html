@@ -1,0 +1,44 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_resume.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+?>
+<html>
+<head>
+    <script type="text/javascript" src="/inc/js/rezume.js"></script>
+</head>
+<?php
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=='resume_enable') { status_change('user_rezume', 'enable', 'Yes|No', $_REQUEST['id']);}
+	if ($_REQUEST['action']=='resume_delete') { del_record('user_rezume', $_REQUEST['id'], 'No', -1); }
+}
+
+?>
+
+
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+echo "<h1>׀וח‏לו</h1>";
+
+
+admin_resume_list();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=="resume_edit") {admin_show_resume($_REQUEST['id']);}
+}
+
+sql_close();
+
+?>
+</body>
+</html>

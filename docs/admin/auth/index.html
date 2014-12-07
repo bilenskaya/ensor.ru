@@ -1,0 +1,36 @@
+<?
+require_once("../fns/admin_common.php");
+require_once("admin_auth.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=='auth_save') {	form_auth_save(); header("location:?letter=".$_REQUEST['letter']); exit(); }
+	if ($_REQUEST['action']=='auth_status') { status_change('users', 'enable', 'Yes|No',$_REQUEST['id']); header("location:?letter=".$_REQUEST['letter']); exit(); }
+	if ($_REQUEST['action']=='auth_delete') { del_record('users', $_REQUEST['id'], 'No', -1); header("location:?letter=".$_REQUEST['letter']); exit(); }
+}
+
+?>
+<html>
+<? html_head(); ?>
+<body>
+<?
+require_once("../menu.inc");
+
+echo "<h1>Пользователи</h1>";
+auth_show();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=="auth_edit") { include ("form_auth.inc"); }
+}
+
+sql_close();
+?>
+</body>
+</html>

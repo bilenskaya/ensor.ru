@@ -1,0 +1,124 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_companies.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+
+
+
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+
+
+
+
+
+if(!$handle = fopen ("companies.csv", "r")) $error="<font color='red'>Can't open file!</font><br>";
+
+while ($data = fgetcsv ($handle, 5000, ";")) 
+{
+    
+    $site=$data[1];
+    $name_full=addslashes($data[2]);
+    $name=addslashes($data[3]);
+    $email=$data[4];
+    $address_legal=addslashes($data[6]);
+    $address_fact=addslashes($data[5]);
+    $fax=$data[7];
+    $phone1=$data[8];
+    $descr=addslashes($data[9]);
+    if (!empty($data[10])) $city_id=$data[10]; else $city_id=0;
+    
+    
+    unset($directions_list); unset($sfery_list);
+    
+    if ($data[12]=="»—“»Õ¿") $directions_list[]=27;
+    if ($data[13]=="»—“»Õ¿") $directions_list[]=28;
+    if ($data[14]=="»—“»Õ¿") $directions_list[]=29;
+    if ($data[15]=="»—“»Õ¿") $directions_list[]=30;
+    if ($data[16]=="»—“»Õ¿") $directions_list[]=31;
+    if ($data[17]=="»—“»Õ¿") $directions_list[]=32;
+    if ($data[18]=="»—“»Õ¿") $directions_list[]=33;
+    if ($data[19]=="»—“»Õ¿") $directions_list[]=34;
+    if ($data[20]=="»—“»Õ¿") $directions_list[]=35;
+    if ($data[21]=="»—“»Õ¿") $directions_list[]=36;
+    if ($data[22]=="»—“»Õ¿") $directions_list[]=37;
+    if ($data[23]=="»—“»Õ¿") $directions_list[]=38;
+    if ($data[24]=="»—“»Õ¿") $directions_list[]=39;
+    if ($data[25]=="»—“»Õ¿") $directions_list[]=40;
+    if ($data[26]=="»—“»Õ¿") $directions_list[]=41;
+    if ($data[27]=="»—“»Õ¿") $directions_list[]=42;
+    if ($data[28]=="»—“»Õ¿") $directions_list[]=43;
+    if ($data[29]=="»—“»Õ¿") $directions_list[]=44;
+    if ($data[30]=="»—“»Õ¿") $directions_list[]=45;
+    if ($data[31]=="»—“»Õ¿") $directions_list[]=46;
+    if ($data[32]=="»—“»Õ¿") $directions_list[]=47;
+    if ($data[33]=="»—“»Õ¿") $directions_list[]=48;
+    if ($data[34]=="»—“»Õ¿") $directions_list[]=49;
+    if ($data[35]=="»—“»Õ¿") $directions_list[]=50;
+    if ($data[36]=="»—“»Õ¿") $directions_list[]=51;
+    if ($data[37]=="»—“»Õ¿") $directions_list[]=52;
+    if ($data[38]=="»—“»Õ¿") $directions_list[]=53;
+    if ($data[39]=="»—“»Õ¿") $directions_list[]=54;
+    
+    if ($data[40]=="»—“»Õ¿") $sfery_list[]=18;
+    if ($data[41]=="»—“»Õ¿") $sfery_list[]=19;
+    if ($data[42]=="»—“»Õ¿") $sfery_list[]=20;
+    if ($data[43]=="»—“»Õ¿") $sfery_list[]=21;
+    if ($data[44]=="»—“»Õ¿") $sfery_list[]=22;
+    if ($data[45]=="»—“»Õ¿") $sfery_list[]=23;
+    if ($data[46]=="»—“»Õ¿") $sfery_list[]=24;
+    if ($data[47]=="»—“»Õ¿") $sfery_list[]=25;
+    if ($data[48]=="»—“»Õ¿") $sfery_list[]=26;
+    if ($data[49]=="»—“»Õ¿") $sfery_list[]=27;
+    
+   	echo $sql_query="INSERT INTO ".$sql_pref."_companies (site, name_full, name, email, address_legal, address_fact, fax, phone1, city_id, descr, enable) VALUES ('".$site."', '".$name_full."', '".$name."', '".$email."', '".$address_legal."', '".$address_fact."', '".$fax."', '".$phone1."', '".$city_id."', '".$descr."', 'No')";
+   	$sql_res=mysql_query($sql_query, $conn_id);
+    $cur_company_id=mysql_insert_id();
+    echo "<br><br>";
+    
+    if (isset($directions_list))
+    {
+        foreach ($directions_list as $val)
+        {
+           	echo $sql_query="INSERT INTO ".$sql_pref."_sd_directions_arts (direction_id, art_id, table_name) VALUES ('".$val."', '".$cur_company_id."', 'companies')";
+           	$sql_res_1=mysql_query($sql_query, $conn_id);
+            echo "<br><br>";
+        }
+        
+    }
+    
+    
+    if (isset($sfery_list))
+    {
+        foreach ($sfery_list as $val)
+        {
+           	echo $sql_query="INSERT INTO ".$sql_pref."_sd_sfery_arts (sfera_id, art_id, table_name) VALUES ('".$val."', '".$cur_company_id."', 'companies')";
+           	$sql_res_1=mysql_query($sql_query, $conn_id);
+            echo "<br><br>";
+        }
+    }
+    
+    echo "<br><br>";
+    
+}
+
+
+
+
+sql_close();
+?>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_maillist.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+
+
+
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+echo "<br>";
+if(!$handle = fopen ("users.csv", "r")) $error="<font color='red'>Can't open file!</font><br>";
+
+$dt_reg="31.08.2010 00:00:00";
+$dt_birth="01.01.1980";
+
+while ($data = fgetcsv ($handle, 1000, ";")) 
+{
+	$surname=trim($data[0]); 
+	$name=trim($data[1]); 
+	$name2=trim($data[2]); 
+	$email=$data[3];
+	$pol=$data[4];
+	$password=$data[5];
+    $actkod=md5(md5(time()*rand()));
+    
+    
+	echo $sql_query="INSERT INTO ".$sql_pref."_users (surname, name, name2, enable, dt_reg, email, pol, pass, actkod, dt_birth, status, forum_admin, maillist) VALUES ('".$surname."', '".$name."', '".$name2."', 'No', '".$dt_reg."', '".$email."', '".$pol."', '".$password."', '".$actkod."', '".$dt_birth."', 'user', 'No', 'Yes')";
+	$sql_res=mysql_query($sql_query, $conn_id);
+	echo "<br>";
+	
+}
+
+sql_close();
+?>
+</body>
+</html>

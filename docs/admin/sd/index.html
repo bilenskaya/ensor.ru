@@ -1,0 +1,51 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_sd.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+if (isset($_REQUEST['action']))
+{
+
+    if ($_REQUEST['action']=='directions_sort_up') { sort_up('sd_directions', $_REQUEST['id'], -1); header("location:?action=directions_show#directions"); exit(); }
+    if ($_REQUEST['action']=='directions_sort_down') { sort_down('sd_directions', $_REQUEST['id'], -1);header("location:?action=directions_show#directions"); exit(); }
+    if ($_REQUEST['action']=='directions_save') { form_directions_save(); header("location:?action=directions_show#directions"); exit(); } 
+	if ($_REQUEST['action']=='directions_delete') { del_record('sd_directions', $_REQUEST['id'], 'Yes', -1);header("location:?action=directions_show#directions"); exit(); }
+
+    if ($_REQUEST['action']=='sfery_sort_up') { sort_up('sd_sfery', $_REQUEST['id'], -1); header("location:?action=sfery_show#sfery"); exit(); }
+    if ($_REQUEST['action']=='sfery_sort_down') { sort_down('sd_sfery', $_REQUEST['id'], -1);header("location:?action=sfery_show#sfery"); exit(); }
+    if ($_REQUEST['action']=='sfery_save') { form_sfery_save(); header("location:?action=sfery_show#sfery"); exit(); } 
+	if ($_REQUEST['action']=='sfery_delete') { del_record('sd_sfery', $_REQUEST['id'], 'Yes', -1);header("location:?action=sfery_show#sfery"); exit(); }
+
+
+}
+
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+echo "<h1>—феры и направлени€</h1>";
+
+sd_show();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=="directions_show") { include ("form_directions.inc"); }
+    
+	if ($_REQUEST['action']=="sfery_show") { include ("form_sfery.inc"); }
+}
+
+sql_close();
+
+?>
+</body>
+</html>

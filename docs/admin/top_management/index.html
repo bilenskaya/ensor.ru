@@ -1,0 +1,46 @@
+<?
+global $path;
+require_once("../fns/admin_common.php");
+require_once("admin_top_management.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=='top_management_save') {	form_top_management_save(); header("location:?letter=".$_REQUEST['letter']); exit(); }
+	if ($_REQUEST['action']=='top_management_status') { status_change('top_management', 'enable', 'Yes|No',$_REQUEST['id']); header("location:?letter=".$_REQUEST['letter']); exit(); }
+	if ($_REQUEST['action']=='top_management_delete') { del_record('top_management', $_REQUEST['id'], 'No', -1); header("location:?letter=".$_REQUEST['letter']); exit(); }
+	if ($_REQUEST['action']=='img_del')
+	{
+	    //echo $path."files/users/img/".$_REQUEST['id'].".jpg";
+		common_del_file($path."files/top_management/img/".$_REQUEST['id'].".jpg");
+		common_del_file($path."files/top_management/avatar/".$_REQUEST['id'].".jpg");
+		//header("location:./"); exit();
+	}
+}
+
+?>
+<html>
+<? html_head(); ?>
+<body>
+<?
+require_once("../menu.inc");
+
+echo "<h1>Менеджеры</h1>";
+top_management_show();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=="top_management_edit" || $_REQUEST['action']=="top_management_add") { include ("form_top_management.inc"); }
+}
+echo "<br><li><a href='?action=top_management_add#top_management_add'>Добавить менеджера</a></li>";
+
+
+sql_close();
+?>
+</body>
+</html>

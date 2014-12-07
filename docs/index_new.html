@@ -1,0 +1,227 @@
+<?
+require_once("fns/config.php");
+require_once("fns/common.php");
+require_once("fns/auth.php");
+require_once("fns/news.php");
+require_once("fns/questions_answers.php");
+require_once("fns/vacancies.php");
+starting();
+auth_maincheck();
+out_art_maintitle()
+?>
+
+<?
+    if (isset($_REQUEST['action']))
+    {
+        //echo $_REQUEST['action'];
+        if ($_REQUEST['action']=="add_vote")  questions_answers_add_vote();
+    }
+?>
+<html>
+<head>
+        <title><? echo $page_title; ?></title>
+        <meta name="KeyWords" content="<? echo $page_keywords; ?>">
+        <meta name="Description" content="<? echo $page_description; ?>">
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+        <meta name='yandex-verification' content='5f54dd179b3e6878' />
+        <meta name="google-site-verification" content="VEIwqPbF500BEx0avpnrrKdADanM0PCVr37VcHq2wOc" />
+        <link rel="stylesheet" type="text/css" href="/styles.css">
+    <script type="text/javascript" src="/inc/js/jquery.min.js" ></script>
+    <script type="text/javascript" src="/inc/js/jquery-ui.min.js" ></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+                $("#featured > ul").tabs({fx:{opacity: "toggle"}}).tabs("rotate", 20000, true);
+        });</script>
+</head>
+<body style="margin: 0 0 0 0;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
+
+<tr>
+<td bgcolor="white">&nbsp;</td>
+<td valign="top" align="center" width="960" bgcolor="white">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" height="119">
+                <tr>
+                        <td width="357"><img src="/img_new/int/logo.gif" border="0" alt="Энергетическое сообщество России"></td>
+                        <td width="10"></td>
+            <td align="center">
+                <table>
+                    <tr>
+                        <td>
+                            <table width="490"  background="/img/int/top_login_search.gi_" align="right">
+                                <tr >
+                                    <td height="0"></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <font style="font-size: 30px;" color="#EB5C3C">Ensor.ru - </font>
+                            <font style="font-size: 30px;" color="#064D83">для кого энергетика - призвание</font>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+                </tr>
+        </table>
+        <table align="left" cellpadding="0" cellspacing="0" border="0" width="100%" height="30">
+                <tr>
+                        <td width="960"><? include "inc/topmenu.inc"; ?></td>
+                </tr>
+        </table>
+</td>
+<td bgcolor="white">&nbsp;</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td width="960"><table border='0'><tr><td valign="top" width="180" bgcolor="#F6F6F6">
+                <table cellpadding='0' cellspacing='0' border='0' width='100%' >
+                    <tr>
+                        <td valign='top'>
+                            <!--div align='right' style='padding: 11 26 0 0;'><img src='/img_new/int/left2-bul.gif' border='0' width='10' height='10' /></div-->
+                            <? echo out_new_persons(3);?>
+                        </td>
+                    </tr>
+                </table>
+</td>
+<td width="16"></td>
+<td width="760"><? include "fns/slider.php"; ?></td></tr></table></td>
+<td></td>
+</tr>
+
+
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;<br/><br/></td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td valign="top" align="center" width="960" height="100%">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
+                <tr>
+                        <td width="244" valign="top">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" background="/img_new/int/left1-bg.gif">
+                    <tr>
+                        <td valign="top" background="/img_new/int/left1-top.gif" style="background-image: /img_new/int/left1-top.gif; background-position: top; background-repeat: repeat-x;">
+                            <? echo auth_enter();?>
+                        </td>
+                    </tr>
+                    <tr height="10">
+                        <td valign="top"><img src="/img_new/int/left1-bottom.gif" border="0" width="244" height="10" /></td>
+                    </tr>
+                </table>
+
+                <div><img src="/img_new/empty.gif" border="0" width="1" height="20" /></div>
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" background="/img_new/int/left1-bg.gif">
+                    <tr>
+                        <td valign="top" background="/img_new/int/left1-top.gif" style="background-image: /img_new/int/left1-top.gif; background-position: top; background-repeat: repeat-x;">
+                            <!--div align="right" style="padding: 11 26 0 0;"><img src="/img_new/int/left2-bul.gif" border="0" width="10" height="10" /></div-->
+                            <? echo out_leftmenu();?>
+                        </td>
+                    </tr>
+                    <tr height="10">
+                        <td valign="top"><img src="/img_new/int/left1-bottom.gif" border="0" width="244" height="10" /></td>
+                    </tr>
+                </table>
+
+                <div><img src="/img_new/empty.gif" border="0" width="1" height="20" /></div>
+                <a href='/discussions/articles/o_proekte_ensor_ru.html'><img src="/img_new/imgs/o_proekte.gif" border="0" /></a>
+
+                <div><img src="/img_new/empty.gif" border="0" width="1" height="20" /></div>
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" background="/img_new/int/left1-bg.gif">
+                    <tr>
+                        <td valign="top" background="/img_new/int/left1-top.gif" style="background-image: /img_new/int/left1-top.gif; background-position: top; background-repeat: repeat-x;">
+                            <!--div align="right" style="padding: 11 26 0 0;"><img src="/img_new/int/left2-bul.gif" border="0" width="10" height="10" /></div-->
+                            <? echo out_activity_main(12);?>
+                        </td>
+                    </tr>
+                    <tr height="10">
+                        <td valign="top"><img src="/img_new/int/left1-bottom.gif" border="0" width="244" height="10" /></td>
+                    </tr>
+                </table>
+
+                <div><img src="/img_new/empty.gif" border="0" width="1" height="20" /></div>
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" background="/img_new/int/left1-bg.gif">
+                    <tr>
+                        <td valign="top" background="/img_new/int/left1-top.gif" style="background-image: /img_new/int/left1-top.gif; background-position: top; background-repeat: repeat-x;">
+                            <!--div align="right" style="padding: 11 26 0 0;"><img src="/img_new/int/left2-bul.gif" border="0" width="10" height="10" /></div-->
+                            <? echo out_new_persons(3);?>
+                        </td>
+                    </tr>
+                    <tr height="10">
+                        <td valign="top"><img src="/img_new/int/left1-bottom.gif" border="0" width="244" height="10" /></td>
+                    </tr>
+                </table>
+
+                <div><img src="/img_new/empty.gif" border="0" width="1" height="20" /></div>
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" background="/img_new/int/left1-bg.gif">
+                    <tr>
+                        <td valign="top" background="/img_new/int/left1-top.gif" style="background-image: /img_new/int/left1-top.gif; background-position: top; background-repeat: repeat-x;">
+                            <!--div align="right" style="padding: 11 26 0 0;"><img src="/img_new/int/left2-bul.gif" border="0" width="10" height="10" /></div-->
+                            <? echo out_activity_persons(5);?>
+                        </td>
+                    </tr>
+                    <tr height="10">
+                        <td valign="top"><img src="/img_new/int/left1-bottom.gif" border="0" width="244" height="10" /></td>
+                    </tr>
+                </table>
+                <br/>
+                <? include "inc/counters.inc"; ?>
+                        </td>
+                        <td width="40" bgcolor="#ffffff"><img src="/img/empty.gif" border="0" width="40" height="1" /></td>
+                        <td width="676" height="100%" valign="top">
+
+                <? echo out_art_attention();?>
+                <? if($user_id==0) echo "<div bgcolor='white' style='padding: 20px 20px 20px 20px' class=mainblockwithoutpadding>".out_art_main(1)."</div><br/><br/>";?>
+
+                <div><? echo news_line(8);?></div>
+                <br/><br/>
+
+                <div class="mainblockwithoutpadding"><? echo out_main_articles(0);?></div>
+                <br/><br/>
+
+                <div class="mainblockwithoutpadding"><? echo out_main_blogposts(5);?></div>
+                <br/><br/>
+
+                <div class="mainblockwithoutpadding"><? echo vacancies_line(5);?></div>
+                <br/><br/>
+
+                <div class="mainblockwithoutpadding"><? echo questions_line();?></div>
+                <br/><br/>
+
+                <div><? echo out_art_main(27);?></div>
+                        </td>
+                </tr>
+        </table>
+</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td valign="top" align="center" width="960">
+        <table align="center" cellpadding="0" cellspacing="0" border="0" width="100%" height="60">
+                <tr>
+                        <td width="100%" valign="top"></td>
+        </tr>
+                <tr>
+                <td width="100%" align="center" valign="middle"><? include "inc/bottom.inc"; ?></td>
+                </tr>
+        </table>
+</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<? sql_close();?>
+</body>
+</html>

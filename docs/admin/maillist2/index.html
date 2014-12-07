@@ -1,0 +1,49 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_maillist.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+if (isset($_REQUEST['action']))
+{
+    //echo $_REQUEST['action'];
+	if ($_REQUEST['action']=='subscribers_add_users_save') { subscribers_add_users_save(); header("location:?action=subscribers_show"); exit(); }
+	if ($_REQUEST['action']=='subscribers_add_form_save') { subscribers_add_form_save(); header("location:?action=subscribers_show"); exit(); }
+	if ($_REQUEST['action']=='subscribers_delete') { del_record('mail2_subscribers', $_REQUEST['subscriber_id'], 'No', -1);	header("location:?action=subscribers_show"); exit(); }
+	if ($_REQUEST['action']=='subscribers_unsend') { subscribers_unsend();	header("location:?action=subscribers_show"); exit(); }
+	if ($_REQUEST['action']=='subscribers_del_users') { del_subscribers();	header("location:?action=subscribers_show"); exit(); }
+
+}
+else
+{
+    header("location:?action=subscribers_show"); exit();
+}
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+echo "<h1>Рассылка</h1>";
+
+
+
+if (isset($_REQUEST['action']))
+{
+    if ($_REQUEST['action']=="mail_from_add" || $_REQUEST['action']=="mail_from_edit") { include ("form_mails.inc"); }
+    if ($_REQUEST['action']=="subscribers_show") { include ("form_subscribers.inc"); }
+
+}
+
+sql_close();
+
+?>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<?
+require_once('fns/config.php');
+require_once('fns/common.php');
+require_once('fns/auth.php');
+require_once('fns/news.php');
+require_once('fns/questions_answers.php');
+require_once('fns/vacancies.php');
+starting();
+auth_maincheck();
+out_art_maintitle()
+?>
+
+<?
+    if (isset($_REQUEST['action']))
+    {
+        //echo $_REQUEST['action'];
+        if ($_REQUEST['action']=='add_vote')  questions_answers_add_vote();
+    }
+?>
+<html>
+<head>
+        <title><? echo $page_title; ?></title>
+        <meta name='KeyWords' content='<? echo $page_keywords; ?>'>
+        <meta name='Description' content='<? echo $page_description; ?>'>
+        <meta http-equiv='Content-Type' content='text/html; charset=windows-1251'>
+        <meta name='yandex-verification' content='5f54dd179b3e6878' />
+        <meta name='google-site-verification' content='VEIwqPbF500BEx0avpnrrKdADanM0PCVr37VcHq2wOc' />
+        <link rel='stylesheet' type='text/css' href='/styles.css'>
+</head>
+<body style='margin: 0 0 0 0;'>
+
+
+<!-- Баеннер RotaBan.ru Ad Code ОБЩИЙ КОД-->
+<script type="text/javascript">
+(function(){
+    var rb = document.createElement('script');
+        d = new Date();
+    d.setHours(0);
+    d.setMinutes(0);
+    d.setSeconds(0);
+    d.setMilliseconds(0);
+    rb.type = 'text/javascript';
+    rb.async = true;
+    rb.src = '//s1.rotaban.ru/rotaban.js?v=' + d.getTime();
+    (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(rb);
+})();
+</script>
+<!-- END RotaBan.ru Ad Code -->
+
+
+
+<table cellpadding='0' cellspacing='0' border='0' width='100%' height='100%'>
+
+<tr>
+<td bgcolor='white'>&nbsp;</td>
+<td valign="top" align="center" width="960" bgcolor="white">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" height="119">
+                <tr>
+                        <td width="270"><a href="/"><img src="/img_new/int/logo.gif" border="0" alt="Энергетическое сообщество России"></a></td>
+                        <td width="30"></td>
+            <td align="center">
+                <table>
+                    <tr>
+                        <td align="right">
+                            <font style="font-size: 28px;" color="#064D83"><font style="font-size: 30px;" color="#EB5C3C">ЭН</font>ЕРГЕТИЧЕСКОЕ </font>
+                            <font style="font-size: 28px;" color="#064D83"><font style="font-size: 30px;" color="#EB5C3C">СО</font>ОБЩЕСТВО </font>
+                            <font style="font-size: 28px;" color="#064D83"><font style="font-size: 30px;" color="#EB5C3C">Р</font>ОССИИ </font>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            <font style="font-size: 18px;" color="#EB5C3C">Ensor.ru - </font>
+                            <font style="font-size: 18px;" color="#064D83">для кого энергетика - призвание</font>
+                             <? if(isset($user_id)&&($user_id==0)) echo "<div style='padding: 10 0 0 0;'> </div><a style='text-decoration: none;' href='/auth/register/'><div style='cursor: pointer; border-width: 1px; border-style: solid; border-color: black; text-align: center; background: #99CC33; vertical-align: bottom; padding: 5 5 5 5; height: 30 px; width: 120 px;'><font style=' padding: 5 5 0 0; font-size: 14px;' color='#FFFFFF'>Присоединяйтесь!</font><br><font style='text-align: center; font-size: 10px;' color='#FFFFFF'>(регистрация)</font></div></a>";?>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+                </tr>
+        </table>
+        <table align="left" cellpadding="0" cellspacing="0" border="0" width="100%" height="30">
+                <tr>
+                        <td width="960"><? include "inc/topmenu.inc"; ?></td>
+                </tr>
+        </table>
+</td>
+<td bgcolor='white'>&nbsp;</td>
+</tr>
+
+<!--tr>
+    <td colspan="3">
+        <br/><br/><a href="http://www.omniconf.ru/" target="_blank"><div align="center"><img border="0" src="/files/banners/exibitions/omniconf_750x90.gif" /></div></a>
+    </td>
+</tr-->
+
+<tr>
+<td>&nbsp;</td>
+<td><!--echo news_line_slider(4);--></td>
+<td>&nbsp;</td>
+</tr>
+
+
+<tr>
+<td>&nbsp;</td>
+<td><?echo out_top_info(3,7);?><br/></td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td valign='top' align='center' width='960' height='100%'>
+        <table cellpadding='0' cellspacing='0' border='0' width='100%' height='100%'>
+                <tr>
+                        <td width='244' valign='top'>
+                <? if(isset($user_id)&&($user_id==0)) echo "
+                <table cellpadding='0' cellspacing='0' border='0' width='244' background='/img_new/int/left1-bg.gif'>
+                    <tr>
+                        <td valign='top' background='/img_new/int/left1-top.gif' style='background-image: /img_new/int/left1-top.gif; background-position: top; background-repeat: repeat-x;'>
+                             ".auth_enter()."
+                        </td>
+                    </tr>
+                    <tr height='10'>
+                        <td valign='top'><img src='/img_new/int/left1-bottom.gif' border='0' width='244' height='10' /></td>
+                    </tr>
+                </table>
+                <div><img src='/img_new/empty.gif' border='0' width='1' height='20' /></div>";
+                ?>
+
+                <table cellpadding='0' cellspacing='0' border='0' width='244' background='/img_new/int/left1-bg.gif'>
+                    <tr>
+                        <td valign='top' background='/img_new/int/left1-top.gif' style='background-image: /img_new/int/left1-top.gif; background-position: top; background-repeat: repeat-x;'>
+                            <!--div align='right' style='padding: 11 26 0 0;'><img src='/img_new/int/left2-bul.gif' border='0' width='10' height='10' /></div-->
+                            <? echo out_leftmenu();?>
+                        </td>
+                    </tr>
+                    <tr height='10'>
+                        <td valign='top'><img src='/img_new/int/left1-bottom.gif' border='0' width='244' height='10' /></td>
+                    </tr>
+                </table>
+
+                <div><img src='/img_new/empty.gif' border='0' width='1' height='20' /></div>
+                 <table cellpadding='0' cellspacing='0' border='0' width='244' background='/img_new/int/left1-bg.gif'>
+                    <tr>
+                        <td valign='top' background='/img_new/int/left1-top.gif' style='background-image: /img_new/int/left1-top.gif; background-position: top; background-repeat: repeat-x;'>
+                            <!--div align='right' style='padding: 11 26 0 0;'><img src='/img_new/int/left2-bul.gif' border='0' width='10' height='10' /></div-->
+                            <? echo out_picture();?>
+                        </td>
+                    </tr>
+                    <tr height='10'>
+                        <td valign='top'><img src='/img_new/int/left1-bottom.gif' border='0' width='244' height='10' /></td>
+                    </tr>
+                </table>
+
+                <div><img src='/img_new/empty.gif' border='0' width='1' height='20' /></div>
+                <a href='/discussions/articles/o_proekte_ensor_ru.html'><img src='/img_new/imgs/o_proekte.gif' border='0' /></a>
+
+                <div><img src='/img_new/empty.gif' border='0' width='1' height='20' /></div>
+                <table cellpadding='0' cellspacing='0' border='0' width='244' background='/img_new/int/left1-bg.gif'>
+                    <tr>
+                        <td valign='top' background='/img_new/int/left1-top.gif' style='background-image: /img_new/int/left1-top.gif; background-position: top; background-repeat: repeat-x;'>
+                            <!--div align='right' style='padding: 11 26 0 0;'><img src='/img_new/int/left2-bul.gif' border='0' width='10' height='10' /></div-->
+                            <? echo out_activity_main(12);?>
+                        </td>
+                    </tr>
+                    <tr height='10'>
+                        <td valign='top'><img src='/img_new/int/left1-bottom.gif' border='0' width='244' height='10' /></td>
+                    </tr>
+                </table>
+
+                <div><img src='/img_new/empty.gif' border='0' width='1' height='20' /></div>
+                <table cellpadding='0' cellspacing='0' border='0' width='244' background='/img_new/int/left1-bg.gif'>
+                    <tr>
+                        <td valign='top' background='/img_new/int/left1-top.gif' style='background-image: /img_new/int/left1-top.gif; background-position: top; background-repeat: repeat-x;'>
+                            <!--div align='right' style='padding: 11 26 0 0;'><img src='/img_new/int/left2-bul.gif' border='0' width='10' height='10' /></div-->
+                            <? echo out_new_persons(5);?>
+                        </td>
+                    </tr>
+                    <tr height='10'>
+                        <td valign='top'><img src='/img_new/int/left1-bottom.gif' border='0' width='244' height='10' /></td>
+                    </tr>
+                </table>
+
+                <div><img src='/img_new/empty.gif' border='0' width='1' height='20' /></div>
+                <table cellpadding='0' cellspacing='0' border='0' width='244' background='/img_new/int/left1-bg.gif'>
+                    <tr>
+                        <td valign='top' background='/img_new/int/left1-top.gif' style='background-image: /img_new/int/left1-top.gif; background-position: top; background-repeat: repeat-x;'>
+                            <!--div align='right' style='padding: 11 26 0 0;'><img src='/img_new/int/left2-bul.gif' border='0' width='10' height='10' /></div-->
+                            <? if(isset($user_id)&&($user_id!=0)) echo out_now_persons(10,20);?>
+                        </td>
+                    </tr>
+                    <tr height='<? if(isset($user_id)&&($user_id!=0)) echo "10"; else echo"0";?>'>
+                        <td valign='top'><img src='/img_new/int/left1-bottom.gif' border='0' width='244' height='<? if(isset($user_id)&&($user_id!=0)) echo "10"; else echo"0";?>' /></td>
+                    </tr>
+                </table>
+
+                <div><img src='/img_new/empty.gif' border='0' width='1' height='20' /></div>
+                <table cellpadding='0' cellspacing='0' border='0' width='244' background='/img_new/int/left1-bg.gif'>
+                    <tr>
+                        <td valign='top' background='/img_new/int/left1-top.gif' style='background-image: /img_new/int/left1-top.gif; background-position: top; background-repeat: repeat-x;'>
+                            <!--div align='right' style='padding: 11 26 0 0;'><img src='/img_new/int/left2-bul.gif' border='0' width='10' height='10' /></div-->
+                            <? echo out_activity_persons(7);?>
+                        </td>
+                    </tr>
+                    <tr height='10'>
+                        <td valign='top'><img src='/img_new/int/left1-bottom.gif' border='0' width='244' height='10' /></td>
+                    </tr>
+                </table>
+                <br/>
+                <? include 'inc/counters.inc'; ?>
+                        </td>
+                        <td width='40' bgcolor='#ffffff'><img src='/img/empty.gif' border='0' width='40' height='1' /></td>
+                        <td width='676' height='100%' valign='top'>
+
+                <? echo out_art_attention();?>
+                <? if($user_id==0) echo '<div>'.out_art_main(1).'</div><br/><br/>';?>
+                <? if(isset($user_id)&&($user_id!=0)) echo auth_user_bar().'<br/><br/>'; ?>
+
+
+                <div><? echo news_line(8);?></div>
+                <br/><br/>
+
+                <div><? echo questions_line();?></div>
+                <br/><br/>
+
+                <div><? echo vacancies_line(5);?></div>
+                <br/><br/>
+
+                <div><? echo out_main_blogposts(5);?></div>
+                <br/><br/>
+
+                <div><? echo out_main_articles(9);?></div>
+                <br/><br/>
+
+                <!--a href="http://www.upgrid.ru/" target="_blank"><div align="center"><img border="0" src="/files/banners/exibitions/2012_upgrid468-60.gif" /></div></a>
+                <a href="http://www.iec-expo.com.ua/index.php?id=380" target="_blank"><div align="center"><img border="0" src="/files/banners/exibitions/EE-baner_rus.gif" /></div></a-->
+                <!--br/><br/>
+                <a href="http://www.upgrid.ru/" target="_blank"><div align="center"><img border="0" src="/files/banners/exibitions/upgrid13-468-60-rosseti.gif" /></div></a-->
+                <!--br/><br/><a href="http://www.enes-expo.ru/" target="_blank"><div align="center"><img border="0" src="/files/banners/exibitions/enes2012_100-100.gif" /></div></a>
+                <br/><br/-->
+                <a href="http://www.iec-expo.com.ua/index.php?id=380" target="_blank"><div align="center"><img border="0" src="/files/banners/exibitions/EE-banner_468x60_2014_rus(1).gif" /></div></a>
+                <br/><br/>
+                <!--a href="http://www.iec-expo.com.ua/index.php?id=1033" target="_blank"><div align="center"><img border="0" src="/files/banners/exibitions/TEK-banner_468x60_2014_rus.gif" /></div></a>
+                <br/><br/>
+                <a href="http://www.iec-expo.com.ua/index.php?id=380" target="_blank"><div align="center"><img border="0" src="/files/banners/exibitions/EE-baner_468x60_2013_rus.gif" /></div></a>
+                <br/><br/-->
+
+
+                <!--a href="http://www.vcudmurtia.ru/" target="_blank"><div align="center"><img border="0" src="/files/banners/exibitions/udmurtia_468_60.gif" /></div></a>
+                            <br/><br/>
+                <a href="http://www.dp.iocenter.ru/c1/" target="_blank"><div align="center"><img border="0" src="/files/banners/exibitions/banerenergo.gif" /></div></a-->
+
+                <br/><p align="center">Хотите разместить рекламу на сайте? Кликните на баннер ниже:</p><br/>
+
+
+<!-- Нижний баннер RotaBan.ru Zone Code -->
+<div align="center" id="rotaban_209956" class="rbrocks rotaban_8d6f73e522db4c0b89716d7c7641cfaa"></div>
+<!-- END RotaBan.ru Zone Code -->
+
+                <br/><p align="center">Хотите обменяться ссылками или баннерами? Перейдите по <a href="http://www.ensor.ru/partners/">ссылке</a>.</p><br/>
+
+
+                <br/><br/><br/><br/><br/><br/>
+                <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
+                <div align="center" class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="button" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,friendfeed,moikrug"></div>
+
+
+            </td>
+                </tr>
+        </table>
+</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td valign='top' align='center' width='960'>
+        <table align='center' cellpadding='0' cellspacing='0' border='0' width='100%' height='60'>
+                <tr>
+                        <td width='100%' valign='top'></td>
+        </tr>
+                <tr>
+                <td width='100%' align='center' valign='middle'><? include 'inc/bottom.inc'; ?></td>
+                </tr>
+        </table>
+</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<? sql_close();?>
+</body>
+</html>

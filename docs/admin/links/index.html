@@ -1,0 +1,69 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("../../fns/config.php");
+require_once("admin_links.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=='rub_save') { form_rub_save();	header("location:?parent_id=".$_REQUEST['parent_id']); exit(); }
+	if ($_REQUEST['action']=='rub_delete') { del_record('links_rubs', $_REQUEST['id'], 'Yes', $_REQUEST['parent_id']); header("location:?parent_id=".$_REQUEST['parent_id']); exit(); }
+	if ($_REQUEST['action']=='rub_enable') { status_change('links_rubs', 'enable', 'Yes|No', $_REQUEST['id']); header("location:?parent_id=".$_REQUEST['parent_id']); exit(); }
+	if ($_REQUEST['action']=='rub_sort_up') { sort_up('links_rubs', $_REQUEST['id'], $_REQUEST['parent_id']); header("location:?parent_id=".$_REQUEST['parent_id']); exit(); }
+	if ($_REQUEST['action']=='rub_sort_down') { sort_down('links_rubs', $_REQUEST['id'], $_REQUEST['parent_id']); header("location:?parent_id=".$_REQUEST['parent_id']); exit(); }
+
+	if ($_REQUEST['action']=='art_save') { form_art_save();	header("location:?parent_id=".$_REQUEST['parent_id']."&action=arts_show#arts_show"); exit(); }
+	if ($_REQUEST['action']=='art_enable') { status_change('links_arts', 'enable', 'Yes|No', $_REQUEST['id']); 	header("location:?parent_id=".$_REQUEST['parent_id']."&action=arts_show#arts_show"); exit(); }
+	if ($_REQUEST['action']=='art_sort_up') { sort_up('links_arts', $_REQUEST['id'], $_REQUEST['parent_id']); header("location:?parent_id=".$_REQUEST['parent_id']."&action=arts_show#arts_show"); exit(); }
+	if ($_REQUEST['action']=='art_sort_down') { sort_down('links_arts', $_REQUEST['id'], $_REQUEST['parent_id']); header("location:?parent_id=".$_REQUEST['parent_id']."&action=arts_show#arts_show"); exit(); }
+	if ($_REQUEST['action']=='art_sort_top') { sort_top('links_arts', $_REQUEST['id'], $_REQUEST['parent_id']); header("location:?parent_id=".$_REQUEST['parent_id']."&action=arts_show#arts_show"); exit(); }
+	if ($_REQUEST['action']=='art_sort_bottom') { sort_bottom('links_arts', $_REQUEST['id'], $_REQUEST['parent_id']); header("location:?parent_id=".$_REQUEST['parent_id']."&action=arts_show#arts_show"); exit(); }
+	if ($_REQUEST['action']=='art_move_save') { form_art_move_save();	header("location:?id=".$_REQUEST['id']."&parent_id=".$_REQUEST['parent_id']."&action=arts_show#arts_show"); exit(); }
+	if ($_REQUEST['action']=='art_delete') { del_record('links_arts', $_REQUEST['id'], 'Yes', $_REQUEST['parent_id']); header("location:?parent_id=".$_REQUEST['parent_id']."&action=arts_show#arts_show"); exit(); }
+
+	if ($_REQUEST['action']=='mail_subscriber_save') {	form_subscriber_save();	header("location:?action=subscribers_show"); exit(); }
+	if ($_REQUEST['action']=='mail_subscriber_enable') { status_change('links_subscribers', 'enable', 'Yes|No', $_REQUEST['id']); header("location:?action=subscribers_show"); exit(); }
+	if ($_REQUEST['action']=='mail_subscriber_delete') { del_record('links_subscribers', $_REQUEST['id'], 'No', -1);header("location:?action=subscribers_show"); exit(); }
+	
+	if ($_REQUEST['action']=='mail_subscribers_save') {	form_subscribers_save();	header("location:?action=subscribers_show"); exit(); }
+
+	if ($_REQUEST['action']=='mail_letter_send') {	header("location:letter_send.html"); exit(); }
+}
+
+
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+rubs_show();
+
+if (isset($_REQUEST['action']) && ($_REQUEST['action']=="subscribers_show" || $_REQUEST['action']=="mail_subscriber_add" || $_REQUEST['action']=="mail_subscriber_edit" || $_REQUEST['action']=="mail_subscribers_add")) subscribers_show();
+
+
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=="rub_add" || $_REQUEST['action']=="rub_edit") { include ("form_rub.inc"); }
+	if ($_REQUEST['action']=="rub_img") { include ("form_rub_img.inc"); }
+	if ($_REQUEST['action']=="art_add" || $_REQUEST['action']=="art_edit") { include ("form_art.inc"); }
+	if ($_REQUEST['action']=="art_move") { include ("form_art_move.inc"); }
+	
+	if ($_REQUEST['action']=="mail_subscriber_add" || $_REQUEST['action']=="mail_subscriber_edit") { include ("form_subscriber.inc"); }
+	if ($_REQUEST['action']=="mail_subscribers_add") { include ("form_subscribers.inc"); }
+}
+
+
+sql_close();
+?>
+</body>
+</html>

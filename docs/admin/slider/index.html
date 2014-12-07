@@ -1,0 +1,39 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_slider.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=='picture_enable') { status_change('slider_picture', 'enable', 'Yes|No', $_REQUEST['id']);}
+	if ($_REQUEST['action']=='picture_def') { status_change('slider_picture', 'def', 'Yes|No', $_REQUEST['id']);}
+	if($_REQUEST['action']=='picture_delete') {del_picture($_REQUEST['id']); }
+}
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+echo "<h1>Картинки слайдера</h1>";
+if ($_REQUEST['action']=='add_pic') {include("form_picture.inc");}
+elseif ($_REQUEST['action']=='picture_trim') {picture_trim();}
+elseif ($_REQUEST['action']=='make_small') {make_small();}
+elseif ($_REQUEST['action']=='save_small') {save_small(); admin_show_catalog();}
+else admin_show_catalog();
+
+sql_close();
+
+?>
+</body>
+</html>

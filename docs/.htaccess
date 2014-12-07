@@ -1,0 +1,17 @@
+RemoveHandler .html
+AddType application/x-httpd-php .html
+
+
+RewriteEngine On
+Options FollowSymlinks
+RewriteBase /
+RewriteRule ^index.html$ - [L]
+RewriteRule ^gmap.html$ - [L]
+RewriteRule ^feedback.html$ - [L] 
+RewriteRule ^banners.php$ - [L] 
+RewriteRule ^index1.html$ - [L] 
+RewriteRule ^index_new.html$ - [L] 
+RewriteRule ^$ - [L]
+RewriteRule ^(.*)(.css|.gif|.jpg|.jpeg|.doc|.xls|.pdf|.zip|.rar|.png|.swf|.psd|.cdr|.txt|.bmp|.mp3|.wav|.rtf|.ppt|.pps|.gz|.xml|.csv|.avi|.mpg|.mpeg|.js|.ico|.php)$ - [L]
+RewriteRule ^show.html$ - [L]
+RewriteRule ^(.*)$ /show.html

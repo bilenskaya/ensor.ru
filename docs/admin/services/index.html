@@ -1,0 +1,49 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_services.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=='services_save') {	form_services_save();	header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='services_enable') { status_change('company_admin', 'enable', 'Yes|No', $_REQUEST['id']); header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='services_info') { status_change('company_admin', 'company_info', 'Yes|No', $_REQUEST['id']); header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='services_vac') { status_change('company_admin', 'company_vacancies', 'Yes|No', $_REQUEST['id']); header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='services_news') { status_change('company_admin', 'company_news', 'Yes|No', $_REQUEST['id']); header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='services_cat') { status_change('company_admin', 'company_catalog', 'Yes|No', $_REQUEST['id']); header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='services_resume') { status_change('company_admin', 'company_resume', 'Yes|No', $_REQUEST['id']); header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='services_foto') { status_change('company_admin', 'company_foto', 'Yes|No', $_REQUEST['id']); header("location:index.html"); exit(); }
+	
+    if ($_REQUEST['action']=='services_main_enable') { status_change('company_admin', 'enable', 'Yes|No', $_REQUEST['id']); header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='services_delete') { del_record('company_admin', $_REQUEST['id'], 'No', -1); header("location:index.html"); exit(); }
+}
+
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+echo "<h1>Действия пользователей</h1>";
+
+services_show();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=="services_add" || $_REQUEST['action']=="services_edit") { include ("form_services.inc"); }
+	if ($_REQUEST['action']=="services_images") { include ("form_services_images.inc"); }
+}
+
+sql_close();
+
+?>
+</body>
+</html>

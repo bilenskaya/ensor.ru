@@ -1,0 +1,49 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("../../fns/config.php");
+require_once("admin_forum.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=='rub_save') { form_rub_save();	header("location:?parent_id=".$_REQUEST['parent_id']); exit(); }
+	if ($_REQUEST['action']=='rub_delete') { del_record('forum_rubs', $_REQUEST['id'], 'Yes', $_REQUEST['parent_id']); header("location:?parent_id=".$_REQUEST['parent_id']); exit(); }
+	if ($_REQUEST['action']=='rub_enable') { status_change('pub_rubs', 'enable', 'Yes|No', $_REQUEST['id']); header("location:?parent_id=".$_REQUEST['parent_id']); exit(); }
+	if ($_REQUEST['action']=='rub_sort_up') { sort_up('forum_rubs', $_REQUEST['id'], $_REQUEST['parent_id']); header("location:?parent_id=".$_REQUEST['parent_id']); exit(); }
+	if ($_REQUEST['action']=='rub_sort_down') { sort_down('forum_rubs', $_REQUEST['id'], $_REQUEST['parent_id']); header("location:?parent_id=".$_REQUEST['parent_id']); exit(); }
+
+	if ($_REQUEST['action']=='art_save') { form_art_save();	header("location:?parent_id=".$_REQUEST['parent_id']."&action=arts_show#arts_show"); exit(); }
+	if ($_REQUEST['action']=='art_enable') { status_change('pub_arts', 'enable', 'Yes|No', $_REQUEST['id']); 	header("location:?parent_id=".$_REQUEST['parent_id']."&action=arts_show#arts_show"); exit(); }
+	if ($_REQUEST['action']=='art_sort_up') { sort_up('pub_arts', $_REQUEST['id'], $_REQUEST['parent_id']); header("location:?parent_id=".$_REQUEST['parent_id']."&action=arts_show#arts_show"); exit(); }
+	if ($_REQUEST['action']=='art_sort_down') { sort_down('pub_arts', $_REQUEST['id'], $_REQUEST['parent_id']); header("location:?parent_id=".$_REQUEST['parent_id']."&action=arts_show#arts_show"); exit(); }
+	if ($_REQUEST['action']=='art_delete') { del_record('pub_arts', $_REQUEST['id'], 'Yes', $_REQUEST['parent_id']); del_dir($path."files/pubs/imgs/".$_REQUEST['id']);del_dir($path."files/pubs/files/".$_REQUEST['id']);	header("location:?parent_id=".$_REQUEST['parent_id']."&action=arts_show#arts_show"); exit(); }
+	if ($_REQUEST['action']=='art_move_save') { form_art_move_save();	header("location:?id=".$_REQUEST['id']."&parent_id=".$_REQUEST['parent_id']."&action=arts_show#arts_show"); exit(); }
+}
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+echo "<h1>Форум</h1>";
+
+rubs_show();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=="rub_add" || $_REQUEST['action']=="rub_edit") { include ("form_rub.inc"); }
+	if ($_REQUEST['action']=="topic_add" || $_REQUEST['action']=="topic_edit") { include ("form_topic.inc"); }
+	if ($_REQUEST['action']=="topic_move") { include ("form_topic_move.inc"); }
+}
+
+sql_close();
+?>
+</body>
+</html>

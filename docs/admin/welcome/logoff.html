@@ -1,0 +1,11 @@
+<?php
+require_once("../../fns/config.php");
+require_once("../fns/admin_common.php");
+
+starting();
+main_header();
+sql_connect();
+auth_delcookie();
+header("location:/admin/"); exit();
+sql_close();
+?>

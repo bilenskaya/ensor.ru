@@ -1,0 +1,108 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_maillist.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+?>
+<html>
+<?php html_head(); ?>
+<body>
+<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
+
+
+<tr>
+<td valign="middle" height="100%" align=center>
+
+	<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
+		<tr>
+			<td width="10" height="100%"><img src="/img/empty.gif" alt="" width="10" height="1" border="0"></td>
+			<td height="100%" valign="middle" align=center>
+				
+
+
+<?
+
+$content=file_get_contents("letter.txt");
+
+$sql_query="SELECT id FROM ".$sql_pref."_mail2_subscribers WHERE dt_send<>'0000-00-00 00:00:00'";
+$sql_res=mysql_query($sql_query, $conn_id);
+$letters_sended_num=mysql_num_rows($sql_res);
+
+$sql_query="SELECT id FROM ".$sql_pref."_mail2_subscribers";
+$sql_res=mysql_query($sql_query, $conn_id);
+$letters_sendall_num=mysql_num_rows($sql_res);
+
+$sql_query="SELECT id, name, email, actkod FROM ".$sql_pref."_mail2_subscribers WHERE dt_send='0000-00-00 00:00:00' ORDER BY name";
+$sql_res=mysql_query($sql_query, $conn_id);
+$letters_tosend_num=mysql_num_rows($sql_res);
+if (mysql_num_rows($sql_res)>0)
+{
+    list($id, $name, $email, $actkod)=mysql_fetch_row($sql_res);
+    
+    $name=stripslashes($name); 
+    //$name=str_replace('"','',$name);$name=str_replace('»','',$name);$name=str_replace('«','',$name);
+    
+    
+    
+    $content=str_replace("%username%",$name,$content);
+    $content=str_replace("%actkod%",$actkod,$content);
+    
+    $letter_content_send=$content;
+    
+    
+    if (!empty($name)) $toemail="".$name." <".$email.">";
+    else $toemail=$email;
+    
+    $letter_name="Энергетическое сообщество России. Вниманию коллег";
+    
+	$mailheader="";
+	$mailheader.="From: Ensor.ru <avkuryatov@ensor.ru>\r\n";
+    //if (!empty($name)) $mailheader.="To: ".$name." <".$email.">\r\n";
+	$mailheader.="MIME-Version: 1.0\r\n";
+    $mailheader.="Content-Type: text/html;\n charset=\"WINDOWS-1251\"";
+    //echo $mailheader;
+    if(mail($toemail, $letter_name, $letter_content_send, $mailheader))
+    {
+        $dt_send=date("Y-m-d H:i:s");
+        
+		$sql_query="UPDATE ".$sql_pref."_mail2_subscribers SET dt_send='".$dt_send."' WHERE id='".$id."'";
+		$sql_res_1=mysql_query($sql_query, $conn_id);
+        
+        $res="".$name." (".$email.")";
+        $res.="<div style='padding:20 0;'><table cellpadding=5 cellspacing=0 border=0 style='border:solid 1px #bbb;' width=700><tr><td>".$letter_content_send."</td></tr></table></div>";
+    }
+    else 
+    {
+        $res="Ошибка отправки письма";
+    }
+    
+    echo "<div style='padding: 10 0;'>".$letters_sended_num." / ".$letters_sendall_num."</div>";
+    echo "<div style='padding: 10 0;'>".$res."</div>";
+    
+}
+else 
+{
+    echo "<h2>Рассылка завершена</h2>";
+}
+echo "<div style='padding: 10 0;'><a href='index.html?action=subscribers_show'>Вернуться</a></div>";
+
+$randtime=rand(2000,5000);
+echo "<script language='JavaScript'>window.setTimeout(\"document.location.href='send.html'\", ".$randtime.")</script>";
+
+
+?>
+
+			</td>
+			<td width="10" height="100%"><img src="/img/empty.gif" alt="" width="10" height="1" border="0"></td>
+		</tr>
+	</table>
+</td>
+</tr>
+</table>
+<? sql_close(); ?>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_companies.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=='companies_save') {	form_companies_save();	header("location:?letter=".@$_REQUEST['letter']); exit(); }
+	if ($_REQUEST['action']=='companies_enable') { status_change('companies', 'enable', 'Yes|No', $_REQUEST['id']); header("location:?letter=".@$_REQUEST['letter']); exit(); }
+	if ($_REQUEST['action']=='companies_check') { status_change('companies', 'checked', 'Yes|No', $_REQUEST['id']); header("location:?letter=".@$_REQUEST['letter']); exit(); }
+    if ($_REQUEST['action']=='companies_delete') { del_record('companies', $_REQUEST['id'], 'No', -1); del_dir($path."files/companies/".$_REQUEST['id']); del_file($path."/files/companies/imgs/".$_REQUEST['id'].".jpg");del_file($path."/files/companies/imgs/".$_REQUEST['id'].".gif");del_file($path."/files/companies/thumbs/".$_REQUEST['id'].".jpg");del_file($path."/files/companies/thumbs/".$_REQUEST['id'].".gif"); header("location:?letter=".@$_REQUEST['letter']); exit(); }
+
+	if ($_REQUEST['action']=='companies_mainimg_del') { del_file($path."/files/companies/imgs/".$_REQUEST['fname']); del_file($path."/files/companies/thumbs/".$_REQUEST['fname']); header("location:?id=".$_REQUEST['id']."&letter=".@$_REQUEST['letter']."&action=companies_edit#companies_edit"); exit(); }
+	
+	if ($_REQUEST['action']=='companies_images_save') { form_companies_images_save(); header("location:?id=".$_REQUEST['id']."&letter=".@$_REQUEST['letter']."&action=companies_images#companies_images"); exit(); }
+	if ($_REQUEST['action']=='companies_images_del') { del_file($path."/files/companies/".$_REQUEST['id']."/".$_REQUEST['fname']); del_empty_dir($path."/files/companies/".$_REQUEST['id']); header("location:?id=".$_REQUEST['id']."&letter=".@$_REQUEST['letter']."&action=companies_images#companies_images"); exit(); }
+}
+
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+echo "<h1>Организации</h1>";
+
+companies_show();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=="companies_add" || $_REQUEST['action']=="companies_edit") { include ("form_companies.inc"); }
+	if ($_REQUEST['action']=="companies_images") { include ("form_companies_images.inc"); }
+}
+
+sql_close();
+
+?>
+</body>
+</html>

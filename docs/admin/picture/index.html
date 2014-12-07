@@ -1,0 +1,54 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_picture.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=='rubric_save') {form_rubric_save();}
+	if ($_REQUEST['action']=='rubric_enable') { status_change('picture_rub', 'enable', 'Yes|No', $_REQUEST['id']);}
+	if ($_REQUEST['action']=='rubric_delete') { del_record('picture_rub', $_REQUEST['id'], 'No', -1); }
+
+	if ($_REQUEST['action']=='picture_save' and $_REQUEST['rub_id']!=='moderate') {form_picture_save(); header("location:?action=rubric_show&id=".@$_REQUEST['rub_id']); exit();}
+	elseif($_REQUEST['action']=='picture_save' and $_REQUEST['rub_id']=='moderate') {form_picture_save(); header("location:?action=moderate"); exit();}
+	if ($_REQUEST['action']=='picture_enable') { status_change('picture', 'enable', 'Yes|No', $_REQUEST['id']); header("location:?action=rubric_show&id=".@$_REQUEST['rub_id']); exit(); }
+	if ($_REQUEST['action']=='moderate_add') { admin_save_moderate($_REQUEST['id']); header("location:?action=moderate"); exit(); }
+	if ($_REQUEST['action']=='picture_delete' and $_REQUEST['rub_id']!=='moderate') {del_picture($_REQUEST['id']); header("location:?action=rubric_show&id=".@$_REQUEST['rub_id']); exit(); }
+	elseif($_REQUEST['action']=='picture_delete' and $_REQUEST['rub_id']=='moderate') {del_picture($_REQUEST['id']); header("location:?action=moderate"); exit(); }
+}
+
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+echo "<h1>Картинки</h1>";
+
+
+admin_rubric_list();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=="rubric_add" || $_REQUEST['action']=="rubric_edit") { include ("form_rubric.inc"); }
+	if ($_REQUEST['action']=="rubric_show") { admin_show_rubric($_REQUEST['id']); }
+	if ($_REQUEST['action']=="moderate") { admin_show_moderate(); }
+	if ($_REQUEST['action']=="picture_edit") { include ("form_picture.inc"); }
+	if ($_REQUEST['action']=="moderate_edit") { include ("form_picture.inc"); }
+}
+
+sql_close();
+
+?>
+</body>
+</html>

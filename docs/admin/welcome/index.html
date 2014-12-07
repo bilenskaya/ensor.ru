@@ -1,0 +1,27 @@
+<?php
+require_once("../../fns/config.php");
+require_once("../fns/admin_common.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+?>
+<html>
+<head>
+	<title>Система управления сайтом</title>
+	<meta name="KeyWords" content="">
+	<meta name="Description" content="">
+	<link rel="stylesheet" type="text/css" href="/admin/styles.css">
+</head>
+<body><a name="top"></a>
+
+<?php require_once("../menu.inc"); ?>
+
+<br>
+<p>Для начала работы выберите, пожалуйста, интересующий раздел в верхнем меню.</p>
+
+
+<?php sql_close();?>
+</body>
+</html>

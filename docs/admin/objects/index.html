@@ -1,0 +1,46 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_objects.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=='objects_save') {	form_objects_save();	header("location:?letter=".@$_REQUEST['letter']); exit(); }
+	if ($_REQUEST['action']=='objects_enable') { status_change('objects', 'enable', 'Yes|No', $_REQUEST['id']); header("location:?letter=".@$_REQUEST['letter']); exit(); }
+	if ($_REQUEST['action']=='objects_delete') { del_record('objects', $_REQUEST['id'], 'No', -1); del_dir($path."files/objects/".$_REQUEST['id']); del_file($path."/files/objects/imgs/".$_REQUEST['id'].".jpg");del_file($path."/files/objects/imgs/".$_REQUEST['id'].".gif");del_file($path."/files/objects/thumbs/".$_REQUEST['id'].".jpg");del_file($path."/files/objects/thumbs/".$_REQUEST['id'].".gif"); header("location:?letter=".@$_REQUEST['letter']); exit(); }
+
+	if ($_REQUEST['action']=='objects_mainimg_del') { del_file($path."/files/objects/imgs/".$_REQUEST['fname']); del_file($path."/files/objects/thumbs/".$_REQUEST['fname']); header("location:?id=".$_REQUEST['id']."&letter=".@$_REQUEST['letter']."&action=objects_edit#objects_edit"); exit(); }
+	
+	if ($_REQUEST['action']=='objects_images_save') { form_objects_images_save(); header("location:?id=".$_REQUEST['id']."&letter=".@$_REQUEST['letter']."&action=objects_images#objects_images"); exit(); }
+	if ($_REQUEST['action']=='objects_images_del') { del_file($path."/files/objects/".$_REQUEST['id']."/".$_REQUEST['fname']); del_empty_dir($path."/files/objects/".$_REQUEST['id']); header("location:?id=".$_REQUEST['id']."&letter=".@$_REQUEST['letter']."&action=objects_images#objects_images"); exit(); }
+}
+
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+echo "<h1>Объекты</h1>";
+
+objects_show();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=="objects_add" || $_REQUEST['action']=="objects_edit") { include ("form_objects.inc"); }
+	if ($_REQUEST['action']=="objects_images") { include ("form_objects_images.inc"); }
+}
+
+sql_close();
+
+?>
+</body>
+</html>

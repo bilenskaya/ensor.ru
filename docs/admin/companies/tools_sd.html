@@ -1,0 +1,116 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_companies.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+
+
+
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+
+
+$sql_query="SELECT id, sfera_ids FROM ".$sql_pref."_companies";
+$sql_res=mysql_query($sql_query, $conn_id);
+if (mysql_num_rows($sql_res)>0)
+{
+	while (list($id, $sfera_ids)=mysql_fetch_row($sql_res))
+	{
+        
+        if (!empty($sfera_ids))
+        {
+            $sfera_ids_list=explode(";",$sfera_ids);
+            
+            foreach ($sfera_ids_list as $val)
+            {
+               	$sql_query="INSERT INTO ".$sql_pref."_sd_sfery_arts (sfera_id, art_id, table_name) VALUES ('".$val."', '".$id."', 'companies')";
+               	$sql_res_1=mysql_query($sql_query, $conn_id);
+            }
+        }
+    }
+}
+
+     
+
+$sql_query="SELECT id, sfera_ids FROM ".$sql_pref."_proposals";
+$sql_res=mysql_query($sql_query, $conn_id);
+if (mysql_num_rows($sql_res)>0)
+{
+	while (list($id, $sfera_ids)=mysql_fetch_row($sql_res))
+	{
+        if (!empty($sfera_ids))
+        {
+            $sfera_ids_list=explode(";",$sfera_ids);
+            
+            foreach ($sfera_ids_list as $val)
+            {
+               	$sql_query="INSERT INTO ".$sql_pref."_sd_sfery_arts (sfera_id, art_id, table_name) VALUES ('".$val."', '".$id."', 'proposals')";
+               	$sql_res_1=mysql_query($sql_query, $conn_id);
+            }
+        }
+    }
+}
+
+     
+/*
+$sql_query="SELECT id, direction_ids FROM ".$sql_pref."_companies";
+$sql_res=mysql_query($sql_query, $conn_id);
+if (mysql_num_rows($sql_res)>0)
+{
+	while (list($id, $direction_ids)=mysql_fetch_row($sql_res))
+	{
+        
+        if (!empty($direction_ids))
+        {
+            $direction_ids_list=explode(";",$direction_ids);
+            
+            foreach ($direction_ids_list as $val)
+            {
+               	$sql_query="INSERT INTO ".$sql_pref."_sd_directions_arts (direction_id, art_id, table_name) VALUES ('".$val."', '".$id."', 'companies')";
+               	$sql_res_1=mysql_query($sql_query, $conn_id);
+            }
+        }
+    }
+}
+
+     
+
+$sql_query="SELECT id, direction_ids FROM ".$sql_pref."_proposals";
+$sql_res=mysql_query($sql_query, $conn_id);
+if (mysql_num_rows($sql_res)>0)
+{
+	while (list($id, $direction_ids)=mysql_fetch_row($sql_res))
+	{
+        if (!empty($direction_ids))
+        {
+            $direction_ids_list=explode(";",$direction_ids);
+            
+            foreach ($direction_ids_list as $val)
+            {
+               	$sql_query="INSERT INTO ".$sql_pref."_sd_directions_arts (direction_id, art_id, table_name) VALUES ('".$val."', '".$id."', 'proposals')";
+               	$sql_res_1=mysql_query($sql_query, $conn_id);
+            }
+        }
+    }
+}
+*/
+
+
+
+
+sql_close();
+?>
+</body>
+</html>

@@ -1,0 +1,6 @@
+RemoveHandler .html
+AddType application/x-httpd-php .html
+
+RewriteEngine Off
+Options FollowSymlinks
+RewriteBase /

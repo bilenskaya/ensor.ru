@@ -1,0 +1,76 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_news.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=='news_save') {	form_news_save();	header("location:index.html"); exit(); }
+//	if ($_REQUEST['action']=='news_enable') { status_change('news', 'enable', 'Yes|No', $_REQUEST['id']); header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='news_main_enable') { status_change('news', 'main', 'Yes|No', $_REQUEST['id']); header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='news_sort_up') { sort_down('news', $_REQUEST['id'], -1); header("location:index.html"); exit();	}
+	if ($_REQUEST['action']=='news_sort_down') { sort_up('news', $_REQUEST['id'], -1); header("location:index.html"); exit();	}
+	if ($_REQUEST['action']=='news_delete') { del_record('news', $_REQUEST['id'], 'Yes', -1); del_dir($path."files/news/".$_REQUEST['id']);del_file($path."/files/news/imgs/".$_REQUEST['id'].".jpg");del_file($path."/files/news/imgs/".$_REQUEST['id'].".gif");del_file($path."/files/news/thumbs/".$_REQUEST['id'].".jpg");del_file($path."/files/news/thumbs/".$_REQUEST['id'].".gif"); header("location:index.html"); exit(); }
+
+	if ($_REQUEST['action']=='news_mainimg_del') { del_file($path."/files/news/imgs/".$_REQUEST['fname']); del_file($path."/files/news/thumbs/".$_REQUEST['fname']); header("location:?id=".$_REQUEST['id']."&action=news_edit#news_edit"); exit(); }
+
+	if ($_REQUEST['action']=='news_images_save') { form_news_images_save(); header("location:?id=".$_REQUEST['id']."&action=news_images#news_images"); exit(); }
+	if ($_REQUEST['action']=='news_images_del') { del_file($path."/files/news/".$_REQUEST['id']."/".$_REQUEST['fname']); del_empty_dir($path."/files/news/".$_REQUEST['id']); header("location:?id=".$_REQUEST['id']."&action=news_images#news_images"); exit(); }
+
+    if ($_REQUEST['action']=='news_top_time_up') { time_up('news', $_REQUEST['id'], -1); header("location:index.html"); exit();	}
+    if ($_REQUEST['action']=='news_top_time_delete') { time_del('news', $_REQUEST['id'], -1); header("location:index.html"); exit();	}
+    
+}
+
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+echo "<h1>Новости</h1>";
+
+news_show();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=="news_add" || $_REQUEST['action']=="news_edit") { include ("form_news.inc"); }
+	if ($_REQUEST['action']=="news_images") { include ("form_news_images.inc"); }
+    if ($_REQUEST['action']=="news_resort") { news_resort(); }
+}
+
+echo "<a href='?action=news_resort'>Пересортировать</a>";
+
+function news_resort()
+{   
+    
+    global $sql_pref, $conn_id;
+	$sql_query="SELECT id FROM ".$sql_pref."_news ORDER BY code";
+    echo $sql_query."!!!";
+	$sql_res=mysql_query($sql_query, $conn_id);
+	if (mysql_num_rows($sql_res)>0)
+	{
+		$i=1;
+		while(list($id)=mysql_fetch_row($sql_res))
+		{
+			$sql_query="UPDATE ".$sql_pref."_news SET code='".$i."' WHERE id='".$id."'";
+			$sql_res_1=mysql_query($sql_query, $conn_id);
+			$i++;
+		}
+	}
+}
+
+
+sql_close();
+
+?>
+</body>
+</html>

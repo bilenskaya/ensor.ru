@@ -1,0 +1,49 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_vacancies.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=='vacancies_save') {	form_vacancies_save();	header("location:index.html"); exit(); }
+//	if ($_REQUEST['action']=='vacancies_enable') { status_change('vacancies', 'enable', 'Yes|No', $_REQUEST['id']); header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='vacancies_main_enable') { status_change('vacancies', 'main', 'Yes|No', $_REQUEST['id']); header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='vacancies_sort_up') { sort_up('vacancies', $_REQUEST['id'], -1); header("location:index.html"); exit();	}
+	if ($_REQUEST['action']=='vacancies_sort_down') { sort_down('vacancies', $_REQUEST['id'], -1); header("location:index.html"); exit();	}
+	if ($_REQUEST['action']=='vacancies_delete') { del_record('vacancies', $_REQUEST['id'], 'Yes', -1); del_dir($path."files/vacancies/".$_REQUEST['id']);del_file($path."/files/vacancies/imgs/".$_REQUEST['id'].".jpg");del_file($path."/files/vacancies/imgs/".$_REQUEST['id'].".gif");del_file($path."/files/vacancies/thumbs/".$_REQUEST['id'].".jpg");del_file($path."/files/vacancies/thumbs/".$_REQUEST['id'].".gif"); header("location:index.html"); exit(); }
+
+	if ($_REQUEST['action']=='vacancies_mainimg_del') { del_file($path."/files/vacancies/imgs/".$_REQUEST['fname']); del_file($path."/files/vacancies/thumbs/".$_REQUEST['fname']); header("location:?id=".$_REQUEST['id']."&action=vacancies_edit#vacancies_edit"); exit(); }
+
+	if ($_REQUEST['action']=='vacancies_images_save') { form_vacancies_images_save(); header("location:?id=".$_REQUEST['id']."&action=vacancies_images#vacancies_images"); exit(); }
+	if ($_REQUEST['action']=='vacancies_images_del') { del_file($path."/files/vacancies/".$_REQUEST['id']."/".$_REQUEST['fname']); del_empty_dir($path."/files/vacancies/".$_REQUEST['id']); header("location:?id=".$_REQUEST['id']."&action=vacancies_images#vacancies_images"); exit(); }
+}
+
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+echo "<h1>Вакансии</h1>";
+
+vacancies_show();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=="vacancies_add" || $_REQUEST['action']=="vacancies_edit") { include ("form_vacancies.inc"); }
+	if ($_REQUEST['action']=="vacancies_images") { include ("form_vacancies_images.inc"); }
+}
+
+sql_close();
+
+?>
+</body>
+</html>

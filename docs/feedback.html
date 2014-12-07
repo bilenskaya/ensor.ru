@@ -1,0 +1,121 @@
+<?php
+require_once("fns/config.php");
+require_once("fns/common.php");
+require_once("fns/auth.php");
+starting();
+auth_maincheck();
+
+
+
+if (isset($_REQUEST['submit']))
+{
+        if (isset($_REQUEST['name']) AND !empty($_REQUEST['name'])) $name=$_REQUEST['name']; else $error['name']="Ошибка!";
+        if (isset($_REQUEST['email']) AND !empty($_REQUEST['email'])) $email=$_REQUEST['email']; else $error['email']="Ошибка!";
+        if (isset($_REQUEST['message']) AND !empty($_REQUEST['message'])) $message=$_REQUEST['message']; else $message="";
+        if (email_valid(@$email)==false) $error['email']="Ошибка!";
+
+        if (!isset($error) || count(@$error)==0)
+        {
+                $dt=date("Y-m-d");
+
+                $mailtitle="Сообщение с сайта ".$path_www;
+                $mailheader="From: robot@".$path_domen."\n";
+                $mailheader.="Content-Type: text/plain;\n charset=\"WINDOWS-1251\"";
+
+                $mailcontent="";
+                $mailcontent.="Имя: ".$name."\n";
+                $mailcontent.="E-mail: ".$email."\n";
+                $mailcontent.="\n";
+                $mailcontent.="Сообщение:\n".$message."\n";
+                $mailcontent.="\n";
+                $mailcontent.="\n";
+
+                mail($admin_email,$mailtitle,$mailcontent,$mailheader);
+
+                $thanks="<div align=center><h2>Спасибо за Ваше сообщение!</h2></div>";
+                $thanks.="<div align=center>".$message."</div>";
+        }
+}
+elseif (@$user_id>0)
+{
+        $sql_query="SELECT CONCAT_WS(' ', name, surname), email FROM ".$sql_pref."_users WHERE id='".$user_id."'";
+        $sql_res_1=mysql_query($sql_query, $conn_id);
+        if (mysql_num_rows($sql_res_1)>0)
+        {
+                list($name, $email)=mysql_fetch_row($sql_res_1);
+                $name=StripSlashes($name);
+        }
+}
+
+?>
+
+<?
+    if (@$_REQUEST['subj']=="auth_company") $subj_text="<div style='padding:0 0 20 0;'>Для того, чтобы добавить вашу компанию в нашу базу, вам необходимо в поле \"Сообщение\" привиденной ниже формы указать название вашей компании, а также другую известную вам дополнительную информацию (телефон, e-mail, адрес, сайт и т.д.).</div>";
+    if (@$_REQUEST['subj']=="vacancies_add_new") $subj_text="<div style='padding:0 0 20 0;'>Для того, чтобы добавить вакансию на сайт, вам необходимо в поле \"Сообщение\" привиденной ниже формы указать описание вакансии, а также другую известную вам дополнительную информацию (организацию, уровень зарплаты, регион и т.д.).</div>";
+    if (@$_REQUEST['subj']=="news_add_new") $subj_text="<div style='padding:0 0 20 0;'>Для того, чтобы добавить новость на сайт, вам необходимо в поле \"Сообщение\" привиденной ниже формы указать описание новости, а также другую известную вам дополнительную информацию (источник, дату и т.д.).</div>";
+    if (@$_REQUEST['subj']=="art_add_new") $subj_text="<div style='padding:0 0 20 0;'>Для того, чтобы добавить статью на сайт, вам необходимо в поле \"Сообщение\" привиденной ниже формы указать статью, а также другую известную вам дополнительную информацию (источник, авторство, дату и т.д.).</div>";
+
+?>
+
+<html>
+<head>
+        <title>Форма обратной связи</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+        <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body style="margin: 0 0 0 0;"><a name=top></a>
+<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
+
+<tr>
+<td valign="top" height="100%">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
+                <tr>
+                        <td width=50><img src=/img/empty.gif width=15 height=1></td>
+                        <td height="100%" valign="middle">
+                                <?if (isset($thanks)) echo $thanks;
+                                else {?>
+                                <div align=left>
+                                        <form action='' method='post' id='feedback_form' name='feedback_form'>
+                                        <br>
+                                        <h1>Форма обратной связи</h1>
+                                        <br>
+                                        <? echo @$subj_text; ?>
+
+                                        Ваше имя:<span style='color:#ff0000;'>*</span> &nbsp;&nbsp; <font color=#FF0000><b><? echo @$error['name'];?></b></font><br>
+                                        <input type=text id=name name=name value='<? echo @$name;?>' style='width:300px;'><br>
+                                        <br>
+
+                                        E-mail:<span style='color:#ff0000;'>*</span> &nbsp;&nbsp; <font color=#FF0000><b><? echo @$error['email'];?></b></font><br>
+                                        <input type=text id=email name=email value='<? echo @$email;?>' style='width:300px;'><br>
+                                        <br>
+
+                                        Сообщение:<br>
+                                        <textarea id=message name=message rows=8 style='width:300px;overflow: auto;'><? echo @$message;?></textarea><br>
+                                        <br>
+
+                                        <table cellpadding=0 cellspacing=0 border=0 width=300>
+                                                <tr>
+                                                        <td align=left><input type='submit' id='submit' name='submit' value='Отправить' style='cursor: pointer; text-decoration: none; font-size: 12px; color: #3E3E3E; border: 1px solid #CCCCCC;'></td>
+                                                        <td width=10>&nbsp;</td>
+                                                        <td align=right><span style='color:#ff0000;'>*</span> - обязательные поля</td>
+                                                </tr>
+                                        </table>
+                                        </form>
+                                </div>
+                                <?}?>
+                        </td>
+                        <td width=50><img src=/img/empty.gif width=15 height=1></td>
+                </tr>
+        </table>
+</td>
+</tr>
+
+<tr>
+<td valign="top">
+        <div align="center"><a href="" onclick="window.close()">Закрыть окно</a><br><br>
+</td>
+</tr>
+</table>
+<?php sql_close();?>
+</body>
+</html>

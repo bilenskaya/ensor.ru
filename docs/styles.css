@@ -1,0 +1,618 @@
+BODY, TD {
+	font-family : Tahoma, Arial, Verdana, Helvetica, sans-serif;
+	font-size : 12px;
+	color : #000;
+}
+
+/*Таблица внутреннего контента*/
+TABLE.maincontent{
+    width: 100%;
+    border-spacing: 0;
+    padding: 0 0 0 0;
+    border: 3px;
+    border-color: #000000;
+    background-color : #ffffff;
+}
+TR.maincontentfirstrow
+{
+    background-color : #F2F2F2;
+    text-align : left;
+    color: #EB5C3C;
+}
+TD.maincontentfirstrow
+{
+    background-color : #F2F2F2;
+    text-align : left;
+    font-size: 16px;
+    padding: 20px 20px 20px 20px;
+    color: #EB5C3C;
+    font-weight: bold;
+}
+TH.maincontent {
+    
+}
+TR.maincontent {
+    background-color : #ffffff;
+    text-align : left;
+    padding: 20px 20px 20px 20px;    
+    color: #EB5C3C;
+}
+TD.maincontent {
+    background-color : #ffffff;
+    text-align : left;
+    padding: 20px 20px 20px 20px;    
+    color: #000000;
+}
+TR.maincontentsubrubric {
+    background-color : #F2F2F2;
+    text-align : left;    
+    color: #000000;
+    font-weight: bold;    
+}
+
+
+
+BODY {
+	background-color : #fff;
+	margin-top : 0px;
+	margin-bottom : 0px;
+	margin-left : 0px;
+	margin-right : 0px;
+}
+
+P {
+	color : #000;
+    background-color : #ffffff;
+	margin : 1 1 0 0;
+    text-align : justify;
+}
+
+SPAN {
+	margin : 1 1 0 0;
+    text-align : justify;
+}
+
+
+A 	{
+	color : #044676;
+	text-decoration : underline;
+}
+A:Visited 	{
+	color : #044676;
+}
+A:Hover 	{
+	color : #044676;
+	text-decoration : none;
+}
+
+
+H1 {
+	font-size : 24px;
+	font-weight : normal;
+	margin : 7 0 7 0;
+	color : #EB5C3C;
+}
+H2 {
+	font-size : 20px;
+	font-weight : normal;
+	margin : 7 0 7 0;
+	color : #EB5C3C;
+}
+H3 {
+	font-size : 16px;
+	font-weight : normal;
+    font-weight: bold;
+	margin : 7 0 7 0;
+	color : #EB5C3C;
+}
+H4 {
+	font-size : 13px;
+	font-weight : normal;
+	color : #EB5C3C;
+}
+
+/* Верхнее меню - Уровень 1 */
+TD.topmenuactive  {
+     color : white;
+     font-size:12px;
+     text-align:center;
+     text-decoration : none;
+}
+DIV.topmenuactive  {
+     background-color : #074D81;
+     color : white;
+     font-size:12px;
+     text-align:center;
+     text-decoration : none;
+}
+TD.topmenunotactive  {
+     color : #064D83;
+     font-size:12px;
+     text-align:center;
+     text-decoration : none;
+}
+
+DIV.topmenunotactive  {
+     background-color : #F2F2F2;
+     color : #064D83;
+     font-size:12px;
+     text-align:center;
+     text-decoration : none;
+}
+
+A.topmenu {
+    text-decoration : none;
+}
+
+TR.top2menuactive  {
+    background-color : #02436F;
+    font-weight: bold;
+     color : #EB5C3C;
+     font-size:12px;
+     text-align:center;
+     text-decoration : none;
+}
+DIV.top2menuactive  {
+    background-color : #02436F;
+    font-weight: bold;
+     color : #EB5C3C;
+     font-size:12px;
+     text-align:center;
+     text-decoration : none;
+}
+
+DIV.top2menunotactive  {
+    background-color : #02436F;
+    font-weight: bold;
+     color : white;
+     font-size:12px;
+     text-align:center;
+     text-decoration : none;
+}
+TD.top2menuactive  {
+    background-color : #02436F;
+    font-weight: bold;
+     color : #EB5C3C;
+     font-size:12px;
+     text-align:center;
+     text-decoration : none;
+}
+
+TD.top2menunotactive  {
+    background-color : #02436F;
+    font-weight: bold;
+     color : white;
+     font-size:12px;
+     text-align:center;
+     text-decoration : none;
+}
+
+
+
+/*===============*/
+DIV.mainblockwithoutpadding  {
+      background-color : #F2F2F2;      
+      border: 1px solid #cccccc;
+      text-align: left;
+      margin : 0 0 0 0;
+      padding: 0 0 0 0;
+}
+
+
+/* Левое меню - Уровень 1 */
+DIV.mainblock  {
+      background-color : #F2F2F2;      
+      border: 1px solid #cccccc;
+      padding-top : 20px;
+      padding-bottom : 20px;
+      padding-left: 20px;
+      padding-right: 20px;
+      text-align: left;
+}
+A.leftmenu 	{
+	font-family : Arial, Verdana, Helvetica, sans-serif;
+	color : #EB5C3C;
+    font-size:12px;
+    font-weight:bold;
+	text-decoration : none;
+	margin-top : 30px;
+	margin-bottom : 0px;
+	margin-right : 0px;
+}
+A:Visited.leftmenu 	{
+	color : #EB5C3C;
+}
+A:Hover.leftmenu 	{
+}
+/* Левое меню - Уровень 2 */
+A.leftmenu1 	{
+        color: #044676;
+	    font-weight:normal;
+        text-decoration : underline;
+        margin-bottom: 5px;
+}
+A.leftmenu1active 	{
+        background-color: #F2F2F2;
+        color: #044676;
+	    font-weight:normal;
+        text-decoration : none;
+}
+A:Visited.leftmenu1 	{
+    color: #044676;
+}
+A:Hover.leftmenu1 	{
+    color : #044676;   
+    text-decoration : none;
+}
+
+
+
+
+
+
+
+TD.companiestable {
+	font-size : 12px;
+	color : #000;
+	padding:5 0;
+	text-align:left;
+	vertical-align:middle;
+	
+	border-bottom:dotted 1px #bbbbbb;
+	
+}
+
+TD.objectstable {
+	font-size : 12px;
+	color : #000;
+	padding:5 0;
+	text-align:left;
+	vertical-align:middle;
+	
+	border-bottom:dotted 1px #bbbbbb;
+	
+}
+
+
+TD.cat_rubric_1 {
+	font-size : 16px;
+	font-weight:bold;
+	color : #000;
+	padding:5 0;
+	text-align:left;
+	vertical-align:middle;
+	
+}
+
+TD.cat_rubric_2 {
+	font-size : 14px;
+	color : #000;
+	padding:3 30;
+	text-align:left;
+	vertical-align:middle;
+}
+
+TD.cat_rubric_3 {
+	font-size : 12px;
+	color : #000;
+	padding:3 60;
+	text-align:left;
+	vertical-align:middle;
+}
+
+TD.catalog {
+}
+
+TABLE.search{
+         background-color : #eeeeff; 
+         border: 1;
+}
+
+TR.active {
+         background-color : #aaaaaa;
+}
+
+TR.catalog {
+	background-color : #afeeee;
+}
+
+TD.cat_img {
+	padding:0 0;
+	text-align:center;
+	vertical-align:middle;
+	background-color : #ffffff;
+}
+
+DIV.cat_name {
+	font-size : 12px;
+	color : #000;
+	padding:5 3;
+	text-align:left;
+	vertical-align:top;
+	font-weight:bold;
+}
+
+DIV.cat_issue {
+	font-size : 10px;
+	color : #000;
+	padding:2 10;
+	text-align:right;
+	vertical-align:top;
+}
+
+
+SPAN.dates{
+    color : #ffffff;
+    background-color: #EB5C3C;	
+}
+
+
+
+DIV.cat_size {
+	font-size : 12px;
+	color : #000;
+	padding:2 2;
+	text-align:middle;
+	vertical-align:top;
+}
+
+DIV.cat_dates {
+	font-size : 10px;
+	color : #000;
+	padding:2 2;
+	text-align:left;
+	vertical-align:top;
+}
+
+DIV.cat_org {
+	font-size : 12px;
+	color : #000;
+	padding:2 10;
+	text-align:right;
+	vertical-align:top;
+	font-weight:bold;
+}
+
+
+/* Алфавит для компаний и объектов */
+A.letters 	{
+	color : #000;
+    font-size:14px;
+    text-transform:uppercase;
+	text-decoration : none;
+}
+A:Visited.letters 	{
+	color : #000;
+}
+A:Hover.letters 	{
+	color : #000;
+    font-size:24px;
+	text-decoration : none;
+}
+
+.resume_help{
+	font-family : Arial, Verdana, Helvetica, sans-serif;
+	color : #0D3F6F;
+    font-size:10px;
+}
+
+
+A.picture_rubric 	{
+	font-family : Arial, Verdana, Helvetica, sans-serif;
+	color : #0D3F6F;
+    font-size:16px;
+    font-weight:bold;
+	text-decoration : none;
+}
+
+.picture_descr 	{
+	font-family : Arial, Verdana, Helvetica, sans-serif;
+	font-weight:bold;
+    font-size:16px;
+	padding: 10;
+	text-align:center;
+}
+
+
+.post_text 	{
+	font-family : Arial, Verdana, Helvetica, sans-serif;
+	font-weight:bold;
+    font-size:18px;
+	padding: 10;
+	text-align:center;
+}
+
+.post_sender 	{
+	font-family : Arial, Verdana, Helvetica, sans-serif;
+	font-weight:bold;
+    font-size:16px;
+	padding: 5;
+	text-align:right;
+}
+
+A.picture_album  {
+     font-family : Arial, Verdana, Helvetica, sans-serif;
+     font-size:11px;
+     text-align:center;
+     text-decoration : none;
+}
+A.left_menu_H3 {
+	font-size : 16px;
+	font-weight : normal;
+    font-weight: bold;
+	margin : 7 0 7 0;
+	color : #EB5C3C;
+    text-decoration : none;
+}
+
+
+/*Слайдер - начало*/
+#featured{ 
+	width:360px; 
+	padding-right:0px; 
+	position:relative; 
+	border:0px solid #F2F2F2; 
+	height:250px; 
+	background:#F2F2F2;
+}
+#featured ul.ui-tabs-nav{ 
+	position:absolute; 
+	top:0; left:370px; 
+	list-style:none; 
+	padding:0; margin:0; 
+	width:350px; 
+}
+#featured ul.ui-tabs-nav li{ 
+	padding:1px 0; padding-left:13px;  
+	font-size:12px; 
+	color:#ffffff; 
+}
+/*маленькая картинка*/
+#featured ul.ui-tabs-nav li img{ 
+	float:left; margin:2px 5px; 
+	background:#F2F2F2; 
+	padding:2px; 
+	border:1px solid #eee;
+}
+#featured ul.ui-tabs-nav li span{ 
+	font-size:11px; font-family:Verdana; 
+	line-height:18px; 
+    background: ;
+}
+#featured li.ui-tabs-nav-item a{ 
+	display:block; 
+	height:60px; 
+	color:#333;  background:#fff; 
+	line-height:20px;
+}
+#featured li.ui-tabs-nav-item a:hover{ 
+	background:#f2f2f2; 
+}
+#featured li.ui-tabs-selected{ 
+	background:url('img/int/selected-item.gif') top left no-repeat;
+}
+#featured ul.ui-tabs-nav li.ui-tabs-selected a{ 
+	background:#F2F2F2; 
+}
+/*фон под большой картинкой*/
+#featured .ui-tabs-panel{ 
+	width:360px; height:250px; 
+	background:#F2F2F2; position:relative;
+}
+#featured .ui-tabs-panel .info{ 
+	position:absolute; 
+	top:180px; left:0; 
+	height:70px; 
+	background: url(\'img/int/transparent-bg.png\'); 
+}
+#featured .info h2{ 
+	font-size:18px; font-family:Georgia, serif; 
+	color:#fff; padding:5px; margin:0;
+	overflow:hidden; 
+}
+#featured .info p{ 
+	margin:0 5px; 
+	font-family:Verdana; font-size:11px; 
+	line-height:15px; color:#f0f0f0;    
+	background: url(\'img/int/transparent-bg.png\'); 
+}
+#featured .info a{ 
+	text-decoration:none; 
+	color:#fff;
+}
+#featured .info a:hover{ 
+	text-decoration:underline; 
+}
+#featured .ui-tabs-hide{ 
+	display:none; 
+}
+/*Слайдер - конец*/
+
+/*=================================================================
+Движущееся меню
+===================================================================*/
+div.sc_menu {
+  /* Set it so we could calculate the offsetLeft */
+  position: relative;
+  height: 250px;
+  width: 200px;
+  /* Add scroll-bars */
+  overflow: auto;
+}
+ul.sc_menu {
+  display: block;
+  height: 250px;
+  /* Max width here, for users without Javascript */
+  width: 200px;
+  padding: 15px 0 0 15px;
+  /* Remove default margin */
+  margin: 0;
+  background: #ccc /*url('navigation.png')*/;
+  list-style: none;
+}
+.sc_menu li {
+  display: block;
+  float: left;
+  padding: 0 4px;
+}
+.sc_menu a {
+  display: block;
+  text-decoration: none;
+}
+.sc_menu span {
+  /* We want a caption to display on the next line */
+  display: block;
+  margin-top: 3px;
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
+}
+
+
+/*Движущееся меню конец*/
+
+
+
+/* для форм добавления информации*/
+TD.form_left{
+	background-color: #E6E6E6;
+	text-align : left;
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 11px;
+	font-weight : normal;
+	width : 150px;
+	padding: 5 5 5 10;
+}
+TD.form_main{
+	background-color: #EFEFEF;
+	text-align : left;
+	width : 450px;
+	padding: 5 5 5 5;
+}
+
+TEXTAREA.form {
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 12px;
+	width : 100%;
+	background-color : #FFFFFF;
+	color : #000000;
+	border : 1px solid Silver;
+}
+INPUT.form {
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 12px;
+	background-color : #FFFFFF;
+	width : 100%;
+	color : #000000;
+	border : 1px solid Silver;
+}
+
+INPUT.form_button {
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 12px;
+	background-color: #E6E6E6;
+	border : 1px solid Silver;
+	width : 100px;
+}
+
+/* для форм добавления информации конец*/
