@@ -6,20 +6,24 @@ function banners_show()
 	echo "<table class='main' cellspacing='2' cellpadding='2' width='100%'>
 			<tr class='maintitle'>
 				<td width='20' class='maintitle' align='center'><b>id</b></td>
-				<td width='80' class='maintitle' align='center'>&nbsp;</td>
-				<td class='maintitle' align='left'><b>url</b></td>
-				<td width='200' class='maintitle' align='center'><b>zone</b></td>
-				<td width='200' class='maintitle' align='center'><b>sort</b></td>
-				<td width='30' class='maintitle' align='center'><b>del</b></td>
+				<td width='80' class='maintitle' align='center'>Активность/картинка/редактировать</td>
+				<td class='maintitle' align='left'><b>Описание</b></td>
+				<td width='50' class='maintitle' align='center'><b>Зона размещения</b></td>
+				<td width='50' class='maintitle' align='center'><b>Сортировка</b></td>
+				<td width='200' class='maintitle' align='center'><b>Начало показа</b></td>
+				<td width='200' class='maintitle' align='center'><b>Окончание показа</b></td>
+				<td width='30' class='maintitle' align='center'><b>Удалить</b></td>
 			</tr>";
 
-	$sql_query="SELECT id, url, enable, sort, zone FROM ".$sql_pref."_banners ORDER BY id";
+	$sql_query="SELECT id, url, enable, sort, zone, show_start, show_end FROM ".$sql_pref."_banners ORDER BY id";
 	$sql_res=mysql_query($sql_query, $conn_id);
 	if (mysql_num_rows($sql_res)>0)
 	{
-		while (list($id, $url, $enable, $sort, $zone)=mysql_fetch_row($sql_res))
+		while (list($id, $descr, $enable,  $sort, $zone, $show_start, $show_end)=mysql_fetch_row($sql_res))
 		{
-			$url=stripslashes($url);
+			$descr=stripslashes($descr);
+            //$show_start=stripslashes($show_start);
+            //$show_end=stripslashes($show_end);
 
 			if ($enable=='Yes') $enable_pic="<a href='?id=".$id."&action=banners_enable'><img src='/admin/img/check_yes.gif' width=25 height=13 alt='Отображение' border=0></a>"; else $enable_pic="<a href='?id=".$id."&action=banners_enable'><img src='/admin/img/check_no.gif' width=25 height=13 alt='Отображение' border=0></a>";
 
@@ -35,9 +39,11 @@ function banners_show()
 			echo "<tr class='common'>
 					<td class='common' align='center'><font color='#A0A0A0'>".$id."</font></td>
 					<td class='common' align='center'>".$enable_pic.$imgs.$edit_pic."</td>
-					<td class='common' align='left'>".$url."</td>
+					<td class='common' align='left'>".$descr."</td>
 					<td class='common' align='center'>".$zone."</td>
 					<td class='common' align='center'>".$sort."</td>
+					<td class='common' align='center'>".$show_start."</td>
+					<td class='common' align='center'>".$show_end."</td>
 					<td class='common' align='center'>".$del."</td>
 				</tr>";
 		}
@@ -50,27 +56,16 @@ function banners_show()
 
 
 
-
-
-
-
-
-
 function form_banners_save()
 {
 	global $sql_pref, $conn_id;
 	if (!isset($_REQUEST['enable']) || $_REQUEST['enable']!="Yes") $enable="No"; else $enable="Yes";
-	if (isset($_REQUEST['name'])) $name=addslashes($_REQUEST['name']); else $name="";
 	if (isset($_REQUEST['descr'])) $descr=addslashes($_REQUEST['descr']); else $descr="";
-	if (isset($_REQUEST['FCKeditor1'])) $content=addslashes($_REQUEST['FCKeditor1']); else $content="";
-	if (isset($_REQUEST['xc2_dt']) && $_REQUEST['date']=="Yes") $dt=$_REQUEST['xc2_dt']." ".$_REQUEST['time']; else $dt="0000-00-00 00:00";
-	if (isset($_REQUEST['tags'])) $tags=addslashes($_REQUEST['tags']); else $tags="";
-	if (isset($_REQUEST['category']) && !empty($_REQUEST['category'])) $category=addslashes($_REQUEST['category']); else $category=addslashes($_REQUEST['category_new']);
-	
-
-	if (isset($_REQUEST['url']) && !empty($_REQUEST['url'])) $url=translit_url($_REQUEST['url']);
-	elseif (!empty($name)) $url=translit_url($name);
-	else $url=date("YmdHi");
+	if (isset($_REQUEST['xc2_dt_start']) && $_REQUEST['date_start']=="Yes") $show_start=$_REQUEST['xc2_dt_start']." ".$_REQUEST['time_start']; else $show_start="0000-00-00 00:00";
+    if (isset($_REQUEST['xc2_dt_end']) && $_REQUEST['date_end']=="Yes") $show_end=$_REQUEST['xc2_dt_end']." ".$_REQUEST['time_end']; else $show_end="0000-00-00 00:00";
+    if (isset($_REQUEST['zone'])) $zone=addslashes($_REQUEST['zone']); else $zone="";
+    if (isset($_REQUEST['sort'])) $sort=addslashes($_REQUEST['sort']); else $sort="";
+    if (isset($_REQUEST['url'])) $url=addslashes($_REQUEST['url']); else $url="";
 	
 	$fl=1;$i=2;
 	while ($fl==1)
@@ -84,13 +79,13 @@ function form_banners_save()
 	
 	if (isset($_REQUEST['id']) && !empty($_REQUEST['id']))
 	{
-		$sql_query="UPDATE ".$sql_pref."_banners SET url='".$url."', enable='".$enable."', dt='".$dt."', name='".$name."', descr='".$descr."', content='".$content."', tags='".$tags."', category='".$category."' WHERE id='".$_REQUEST['id']."'";
+		$sql_query="UPDATE ".$sql_pref."_banners SET url='".$url."', enable='".$enable."', show_start='".$show_start."', show_end='".$show_end."', sort='".$sort."', descr='".$descr."', zone='".$zone."' WHERE id='".$_REQUEST['id']."'";
 		$sql_res=mysql_query($sql_query, $conn_id);
 		$pic_id=$_REQUEST['id'];
 	}
 	else
 	{
-		$sql_query="INSERT INTO ".$sql_pref."_banners (url, enable, dt, name, descr, content, tags, category) VALUES ('".$url."', '".$enable."', '".$dt."', '".$name."', '".$descr."', '".$content."', '".$tags."', '".$category."')";
+		$sql_query="INSERT INTO ".$sql_pref."_banners (url, enable, show_start, show_end, sort, descr, zone) VALUES ('".$url."', '".$enable."', '".$show_start."', '".$show_end."','".$sort."', '".$descr."', '".$zone."')";
 		$sql_res=mysql_query($sql_query, $conn_id);
 		$pic_id=mysql_insert_id();
 	}
