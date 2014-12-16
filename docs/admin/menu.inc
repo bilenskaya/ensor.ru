@@ -29,6 +29,7 @@ $menu_items=array (
 "maillist"=>"Рассылка",
 "calendar"=>"События",
 "actions"=>"Действия пользователей",
+"banners"=>"Баннеры",
 "services"=>"Услуги");
 
 

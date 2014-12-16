@@ -1,0 +1,61 @@
+###1 База данных
+в phpmyadmin скопировать таблицу статей только структуру
+
+##удалить поля
+name
+content
+tags
+category
+views
+
+##добавить поля
+show_start - дата начала показа, по умолчанию 0000-00-00 00:00:00  тип DATETIME
+show_end - дата отображения показа, 0000-00-00 00:00:00  тип DATETIME
+sort - номер сортировки баннеров в одном блоке,
+zona
+
+итого поля
+
+поля:  id - идентификатор,
+desc - описание,
+enable - логическое поле отображения,
+show_start - дата начала показа,
+show_end - дата отображения показа,
+sort - номер сортировки баннеров в одном блоке,
+file - ссылка на файл в папке сайта,
+zone - зона размещения баннера) [0.5 часа];
+
+###2 админский раздел
+
+копируем папку articles
+
+меняем все названия файлов на баннерс
+меняем все указатели внутри файлов на баннерс
+
+в admin_banners.php меняем строчку
+$sql_query="SELECT id, url, enable, name FROM ".$sql_pref."_banners ORDER BY name";
+
+убираем name, добавляем sort, zone
+удаляем $name=stripslashes($name);
+изменяем ORDER BY name на ORDER BY id
+
+в form_banners.php меняем строчку
+	$sql_query="SELECT id, enable, dt, url, name, descr, content, category, tags FROM ".$sql_pref."_banners WHERE id='".$_REQUEST['id']."'";
+
+	на
+	$sql_query="SELECT id, url, enable, descr, sort, zone FROM ".$sql_pref."_banners WHERE id='".$_REQUEST['id']."'";
+
+	list($id, $enable, $dt, $url, $name, $descr, $content, $category, $tags)=mysql_fetch_row($sql_res);
+    		$name=stripslashes($name);
+    		$descr=stripslashes($descr);
+    		$content=stripslashes($content);
+    		$category=stripslashes($category);
+    		$tags=stripslashes($tags);
+    		$xc2_dt=substr($dt,0,10);
+    		$time=substr($dt,11,5);
+
+    list($id, $enable, $url,  $descr, $sort, $zone, $show_start)=mysql_fetch_row($sql_res);
+    		$name=stripslashes($url);
+            $descr=stripslashes($descr);
+    		$xc2_dt=substr($show_start,0,10);
+    		$time=substr($show_start,11,5);

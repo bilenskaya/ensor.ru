@@ -1,7 +1,7 @@
 <?php
-$sql_host="ensor.mysql";
-$sql_login="ensor_mysql";
-$sql_passwd="reufpttw"; 
+$sql_host="localhost";
+$sql_login="root";
+$sql_passwd="root"; 
 $sql_database="ensor_db";
 
 

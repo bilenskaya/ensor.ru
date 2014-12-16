@@ -1,0 +1,46 @@
+<?php
+require_once("../fns/admin_common.php");
+require_once("admin_banners.php");
+require_once("../../fns/config.php");
+
+starting();
+main_header();
+sql_connect();
+auth_check();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=='banners_save') {	form_banners_save();	header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='banners_enable') { status_change('banners', 'enable', 'Yes|No', $_REQUEST['id']); header("location:index.html"); exit(); }
+	if ($_REQUEST['action']=='banners_delete') { del_record('banners', $_REQUEST['id'], 'No', -1); del_dir($path."files/banners/".$_REQUEST['id']); del_file($path."/files/banners/imgs/".$_REQUEST['id'].".jpg");del_file($path."/files/banners/imgs/".$_REQUEST['id'].".gif");del_file($path."/files/banners/thumbs/".$_REQUEST['id'].".jpg");del_file($path."/files/banners/thumbs/".$_REQUEST['id'].".gif"); header("location:index.html"); exit(); }
+
+	if ($_REQUEST['action']=='banners_mainimg_del') { del_file($path."/files/banners/imgs/".$_REQUEST['fname']); del_file($path."/files/banners/thumbs/".$_REQUEST['fname']); header("location:?id=".$_REQUEST['id']."&action=banners_edit#banners_edit"); exit(); }
+	
+	if ($_REQUEST['action']=='banners_images_save') { form_banners_images_save(); header("location:?id=".$_REQUEST['id']."&action=banners_images#banners_images"); exit(); }
+	if ($_REQUEST['action']=='banners_images_del') { del_file($path."/files/banners/".$_REQUEST['id']."/".$_REQUEST['fname']); del_empty_dir($path."/files/banners/".$_REQUEST['id']); header("location:?id=".$_REQUEST['id']."&action=banners_images#banners_images"); exit(); }
+}
+
+?>
+
+
+<html>
+<?php html_head(); ?>
+<body>
+<?php
+require_once("../menu.inc");
+
+echo "<h1>Баннеры</h1>";
+
+banners_show();
+
+if (isset($_REQUEST['action']))
+{
+	if ($_REQUEST['action']=="banners_add" || $_REQUEST['action']=="banners_edit") { include ("form_banners.inc"); }
+	if ($_REQUEST['action']=="banners_images") { include ("form_banners_images.inc"); }
+}
+
+sql_close();
+
+?>
+</body>
+</html>
