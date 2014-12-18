@@ -6,7 +6,7 @@ function banners_show()
 	echo "<table class='main' cellspacing='2' cellpadding='2' width='100%'>
 			<tr class='maintitle'>
 				<td width='20' class='maintitle' align='center'><b>id</b></td>
-				<td width='80' class='maintitle' align='center'>Активность/картинка/редактировать</td>
+				<td width='80' class='maintitle' align='center'>Активность/редактировать</td>
 				<td class='maintitle' align='left'><b>Описание</b></td>
 				<td width='50' class='maintitle' align='center'><b>Зона размещения</b></td>
 				<td width='50' class='maintitle' align='center'><b>Сортировка</b></td>
@@ -15,7 +15,7 @@ function banners_show()
 				<td width='30' class='maintitle' align='center'><b>Удалить</b></td>
 			</tr>";
 
-	$sql_query="SELECT id, url, enable, sort, zone, show_start, show_end FROM ".$sql_pref."_banners ORDER BY id";
+	$sql_query="SELECT id, descr, enable, sort, zone, show_start, show_end FROM ".$sql_pref."_banners ORDER BY zone";
 	$sql_res=mysql_query($sql_query, $conn_id);
 	if (mysql_num_rows($sql_res)>0)
 	{
@@ -27,9 +27,6 @@ function banners_show()
 
 			if ($enable=='Yes') $enable_pic="<a href='?id=".$id."&action=banners_enable'><img src='/admin/img/check_yes.gif' width=25 height=13 alt='Отображение' border=0></a>"; else $enable_pic="<a href='?id=".$id."&action=banners_enable'><img src='/admin/img/check_no.gif' width=25 height=13 alt='Отображение' border=0></a>";
 
-            if (is_dir($path."files/banners/".$id) && is_cat_empty($path."files/banners/".$id)==false)
-                $imgs="<a href='?id=".$id."&action=banners_images#banners_images'><img src='/admin/img/img.gif' width=25 height=13 alt='Дополнительные изображения' border=0></a>";
-                else $imgs="<a href='?id=".$id."&action=banners_images#banners_images'><img src='/admin/img/img_ina.gif' width=25 height=13 alt='Дополнительные изображения' border=0></a>";
 
 
             $edit_pic="<a href='?id=".$id."&action=banners_edit#banners_edit'><img src='/admin/img/edit.gif' width=25 height=13 alt='Редактировать' border=0></a>";
@@ -38,7 +35,7 @@ function banners_show()
             $del="<a href=\"javascript:if(confirm('Вы уверены?'))window.location='?id=".$id."&action=banners_delete'\"><img src='/admin/img/del.gif' width=25 height=13 alt='Удалить' border=0></a>";
 			echo "<tr class='common'>
 					<td class='common' align='center'><font color='#A0A0A0'>".$id."</font></td>
-					<td class='common' align='center'>".$enable_pic.$imgs.$edit_pic."</td>
+					<td class='common' align='center'>".$enable_pic.$edit_pic."</td>
 					<td class='common' align='left'>".$descr."</td>
 					<td class='common' align='center'>".$zone."</td>
 					<td class='common' align='center'>".$sort."</td>
@@ -52,8 +49,6 @@ function banners_show()
 	echo "<br><li><a href='?action=banners_add#banners_add'>Добавить</a></li>";
 	echo "<hr>";
 }
-
-
 
 
 function form_banners_save()
@@ -95,14 +90,6 @@ function form_banners_save()
 }
 
 
-
-
-
-
-
-
-
-
 function form_banners_mainimg_save($pic_id)
 {
 	global $path;
@@ -130,13 +117,6 @@ function form_banners_mainimg_save($pic_id)
 	}
 	else echo "Ошибка! Недопустимый формат файла.";
 }
-
-
-
-
-
-
-
 
 
 

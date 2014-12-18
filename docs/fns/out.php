@@ -48,30 +48,40 @@ function out_topmenu()
 }
 
 
-
-
-
-
-
-
-
-
 function out_leftmenu()
 {
-	global $sql_pref, $conn_id, $rub_id;
+	global $sql_pref, $conn_id, $rub_id, $path;
 	$out="";
+    $date=date("Y-m-d");
 
 	$sql_query="SELECT id, url, name FROM ".$sql_pref."_pub_rubs WHERE parent_id='0'&&enable='Yes' ORDER BY code";
 	$sql_res=mysql_query($sql_query, $conn_id);
-	if (mysql_num_rows($sql_res)>0)
+
+    $sql_query_banners="SELECT id, descr, url, show_start, show_end FROM ".$sql_pref."_banners WHERE enable='Yes'AND zone=2 ORDER BY sort";
+   $sql_res_banners=mysql_query($sql_query_banners, $conn_id);
+
+    if (mysql_num_rows($sql_res_banners)>0)
+    {
+        while ($row=mysql_fetch_row($sql_res_banners, MYSQL_ASSOC))
+        {
+            $id_b[]= $row["id"];
+            $descr_b[]= $row["descr"];
+            $url_b[]= $row["url"];
+            $show_start[]= $row["show_start"];
+            $show_end[] = $row["show_end"];
+        }
+    }
+
+    $total = count($id_b);
+    $i=0;
+
+    if (mysql_num_rows($sql_res)>0)
 	{
 		while(list($id, $url, $name)=mysql_fetch_row($sql_res))
 		{
 			$name=stripslashes($name);
             $name_show=$name;
-            
-            
-            /*
+        /*
             $out.="<table style='padding:20px 0px 0px 20px;' cellspacing=0 border=0 width=100% height=19>";
 			$out.="<tr><td align=left valign=top style='padding:0px 5px 0px 2px;'>
                         <table cellpadding=0 cellspacing=0 border=0 width=100%>
@@ -84,10 +94,35 @@ function out_leftmenu()
             $out.="</table>";
             */
             $out.="<h3 style='padding:20 10 0 20;'><a class=leftmenu href='/".$url."/'>".$name_show."</a></h3>";
-            
+
+
+            if ($i!=$total)
+
+            {
+
+                if ($show_start[$i]<$date&&$show_end[$i]>$date) {
+
+                    if ($id_b[$i]!=="" and file_exists($path."files/banners/imgs/".$id_b[$i].".jpg"))
+                        $img="<img src='/files/banners/imgs/".$id_b[$i].".jpg' width='226'  alt='".$descr_b[$i]."' >";
+                    else $img="<img src='/files/banners/not_found_ban.png' width='200'>";
+
+                    $out_ban="<div style='padding: 0px 5px 0px 0px;' align='left'><a href='$url_b[$i]'>".$img."</a></div>";
+
+                    $out.=$out_ban;
+
+
+                }
+
+                $i++;
+
+            }
+
+
+
+
+
             //$out.="<table cellpadding=0 cellspacing=0 border=0 width=100% height=1 background='/img/dots-hor.gif'><tr><td><img src='/img/empty.gif' border=0 width=1 height=1></td></tr></table>";
-            
-            
+
         	$sql_query="SELECT id, url, name FROM ".$sql_pref."_pub_rubs WHERE parent_id='".$id."'&&enable='Yes' ORDER BY code";
         	$sql_res_1=mysql_query($sql_query, $conn_id);
         	if (mysql_num_rows($sql_res_1)>0)
@@ -104,10 +139,10 @@ function out_leftmenu()
                                 <td valign=top style='padding: 5 0 6 0;'><img src='/img_new/int/left_bul.gif' border=0 width=4 height=6></td>
                                 <td align=left valign=top style='padding: 0 5 6 5;'><a class=".$name_class." href='/".$url."/".$url1."/'>".$name1_show."</a></td>
                             </tr>";
-        		} 
+        		}
                 $out.="</table></div>";
         	}
-		} 
+		}
 	}
 	return ($out);
 }
@@ -644,6 +679,90 @@ function out_picture()
 	
 	
     return $out_pic;    
+}
+
+
+function out_banner_zone1()
+{
+    global $conn_id, $sql_pref, $path_banners, $path;
+    $date=date("Y-m-d");
+
+    $sql_query="SELECT id, descr, url, show_start, show_end FROM ".$sql_pref."_banners WHERE enable='Yes'AND zone=1 ORDER BY sort";
+    $sql_res=mysql_query($sql_query, $conn_id);
+
+    if (mysql_num_rows($sql_res)>0)
+    {
+        while (list($id, $descr, $url, $show_start, $show_end)=mysql_fetch_row($sql_res))
+        {
+            if ($show_start<$date&&$show_end>$date) {
+
+            if ($id!=="" and file_exists($path."files/banners/imgs/".$id.".jpg"))
+                $img="<img src='/files/banners/imgs/".$id.".jpg' width='960' height='60' alt='".$descr."' >";
+            else $img="<img src='/files/banners/not_found_ban.png' width='200'>";
+
+            $out_ban="<div style='padding: 5px 0px 0px 0px;' align='center'><a href='$url'>".$img."</a></div>";
+
+        }
+
+        }
+    }
+    return ($out_ban);
+
+}
+
+
+function out_banner_zone2()
+{
+    global $conn_id, $sql_pref, $path_banners, $path;
+    $date=date("Y-m-d");
+    $sql_query="SELECT id, descr, url, show_start, show_end FROM ".$sql_pref."_banners WHERE enable='Yes'AND zone=2 ORDER BY sort";
+    $sql_res=mysql_query($sql_query, $conn_id);
+    if (mysql_num_rows($sql_res)>0)
+    {
+        while (list($id, $descr, $url, $show_start, $show_end)=mysql_fetch_row($sql_res))
+        {
+            if ($show_start<$date&&$show_end>$date) {
+
+                if ($id!=="" and file_exists($path."files/banners/imgs/".$id.".jpg"))
+                    $img="<img src='/files/banners/imgs/".$id.".jpg' width='224'  alt='".$descr."' >";
+                else $img="<img src='/files/banners/not_found_ban.png' width='200'>";
+
+                $out_ban="<div style='padding: 0px 5px 0px 0px;' align='left'><a href='$url'>".$img."</a></div>";
+
+            }
+
+        }
+    }
+    return ($out_ban);
+
+}
+
+function out_banner_zone3()
+{
+    global $conn_id, $sql_pref, $path_banners, $path;
+    $date=date("Y-m-d");
+
+    $sql_query="SELECT id, descr, url, show_start, show_end FROM ".$sql_pref."_banners WHERE enable='Yes'AND zone=3 ORDER BY sort";
+    $sql_res=mysql_query($sql_query, $conn_id);
+
+    if (mysql_num_rows($sql_res)>0)
+    {
+        while (list($id, $descr, $url, $show_start, $show_end)=mysql_fetch_row($sql_res))
+        {
+            if ($show_start<$date&&$show_end>$date) {
+
+                if ($id!=="" and file_exists($path."files/banners/imgs/".$id.".jpg"))
+                    $img="<img src='/files/banners/imgs/".$id.".jpg' width='460'  height='60' alt='".$descr."' >";
+                else $img="<img src='/files/banners/not_found_ban.png' width='200'>";
+
+                $out_ban="<div style='padding: 5px 0px 0px 0px;' align='center'><a href='$url'>".$img."</a></div>";
+
+            }
+
+        }
+    }
+    return ($out_ban);
+
 }
 
 

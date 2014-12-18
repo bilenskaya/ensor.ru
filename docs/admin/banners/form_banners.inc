@@ -117,7 +117,9 @@ function check_date_end()
 				<tr>
 					<td><input name="date_start" type="checkbox" value="Yes" onclick="check_date_start()" <?php if (isset($show_start) && $show_start=="0000-00-00 00:00") echo ""; else echo "checked"; ?>></td>
 					<td id="holder"><input type="text" name="xc2_dt_start" id="xc2_dt_start" maxlength=10 size=10 value="<?php echo $xc2_dt_start; ?>" onclick="showCalendar('',document.getElementById('xc2_dt_start'),null,'<?php echo $xc2_dt_start; ?>','holder',0,25,1);" style="width:90;cursor:pointer;"></td>
-					<td><input type="text" name="time_start" id="time_start" maxlength=10 size=10 value="<?php echo @$time_start; ?>" style="width:40;"></td>
+                    <!--<td><input type="text" name="time_start" id="time_start" maxlength=10 size=10 value="<?php echo @$time_start; ?>" style="width:40;"></td>
+				     -->
+
 				</tr>
 			</table>
 			<script language="JavaScript">check_date_start();</script>
@@ -131,7 +133,8 @@ function check_date_end()
                 <tr>
                     <td><input name="date_end" type="checkbox" value="Yes" onclick="check_date_end()" <?php if (isset($show_end) && $show_end=="0000-00-00 00:00") echo ""; else echo "checked"; ?>></td>
                     <td id="holder"><input type="text" name="xc2_dt_end" id="xc2_dt_end" maxlength=10 size=10 value="<?php echo $xc2_dt_end; ?>" onclick="showCalendar('',document.getElementById('xc2_dt_end'),null,'<?php echo $xc2_dt_end; ?>','holder',0,25,1);" style="width:90;cursor:pointer;"></td>
-                    <td><input type="text" name="time_end" id="time_end" maxlength=10 size=10 value="<?php echo @$time_end; ?>" style="width:40;"></td>
+                    <!--<td><input type="text" name="time_end" id="time_end" maxlength=10 size=10 value="<?php echo @$time_end; ?>" style="width:40;"></td>
+                     -->
                 </tr>
             </table>
             <script language="JavaScript">check_date_end();</script>

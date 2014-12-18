@@ -66,12 +66,6 @@ function top_management_show()
 
 
 
-
-
-
-
-
-
 function form_top_management_save()
 {
 	global $sql_pref, $conn_id, $path;

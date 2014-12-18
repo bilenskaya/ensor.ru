@@ -81,6 +81,9 @@ $articles_perpage=10;
 $articles_img_width=200;$articles_img_height=150;
 $articles_img_thumb_width=80;$articles_img_thumb_height=80;
 
+$path_banners="banners";
+$banners_img_width=200;$banners_img_height=150;
+$banners_img_thumb_width=80;$banners_img_thumb_height=80;
 
 $path_users="users";
 $users_perpage=30;
