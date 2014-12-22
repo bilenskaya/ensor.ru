@@ -6,7 +6,12 @@ if (isset($_REQUEST['action']) && $_REQUEST['action']=="banners_add")
 	$enable="Yes";
 	$xc2_dt_start=date("Y-m-d");
 	$time_start=date("H:i");
-    $xc2_dt_end=date("Y-m-d");
+    //$xc2_dt_end=date("Y-m-d");
+
+    $xc2_dt_end = (date("Y-m-d",time()+ 30*24*60*60));
+
+
+
     $time_end=date("H:i");
 	$title="Добавление";
 }
@@ -76,7 +81,7 @@ function check_date_end()
         if (document.form_name.xc2_dt_end.value=="0000-00-00")
         {
             var currentTime = new Date()
-            var month = currentTime.getMonth() + 1
+            var month = currentTime.getMonth() + 2
             var day = currentTime.getDate()
             var year = currentTime.getFullYear()
             if (month < 10) {month = "0" + month;}
@@ -158,7 +163,7 @@ function check_date_end()
 	</tr>
 
 	<tr>
-		<td class="form_left">URL</td>
+		<td class="form_left">URL <br> пример указания ссылки: "http://www.yandex.ru/"</td>
 		<td class="form_main"> 
 			<input class="form" type="text" name="url" value='<?php if(isset($url)) echo $url; ?>'>
 		</td>

@@ -53,6 +53,9 @@ function out_leftmenu()
 	global $sql_pref, $conn_id, $rub_id, $path;
 	$out="";
     $date=date("Y-m-d");
+    $date1 = str_replace('-', '/', $date);
+    $tomorrow = date('Y-m-d',strtotime($date1 . "+1 days"));
+    $date = $tomorrow;
 
 	$sql_query="SELECT id, url, name FROM ".$sql_pref."_pub_rubs WHERE parent_id='0'&&enable='Yes' ORDER BY code";
 	$sql_res=mysql_query($sql_query, $conn_id);
@@ -96,26 +99,6 @@ function out_leftmenu()
             $out.="<h3 style='padding:20 10 0 20;'><a class=leftmenu href='/".$url."/'>".$name_show."</a></h3>";
 
 
-            if ($i!=$total)
-
-            {
-
-                if ($show_start[$i]<$date&&$show_end[$i]>$date) {
-
-                    if ($id_b[$i]!=="" and file_exists($path."files/banners/imgs/".$id_b[$i].".jpg"))
-                        $img="<img src='/files/banners/imgs/".$id_b[$i].".jpg' width='226'  alt='".$descr_b[$i]."' >";
-                    else $img="<img src='/files/banners/not_found_ban.png' width='200'>";
-
-                    $out_ban="<div style='padding: 0px 5px 0px 0px;' align='left'><a href='$url_b[$i]'>".$img."</a></div>";
-
-                    $out.=$out_ban;
-
-
-                }
-
-                $i++;
-
-            }
 
 
 
@@ -142,6 +125,33 @@ function out_leftmenu()
         		}
                 $out.="</table></div>";
         	}
+
+
+
+            if ($i!=$total)
+
+            {
+                if ($show_start[$i]<=$date&&$show_end[$i]>$date) {
+
+                    if (file_exists($path."files/banners/imgs/".$id_b[$i].".jpg") || file_exists($path."files/banners/imgs/".$id_b[$i].".gif"))
+                    {
+                        if (file_exists($path."files/banners/imgs/".$id_b[$i].".jpg")) $ext=".jpg";
+                        elseif (file_exists($path."files/banners/imgs/".$id_b[$i].".gif")) $ext=".gif";
+                        $img="<img src='/files/banners/imgs/".$id_b[$i].$ext."' width='226'  alt='".$descr_b[$i]."' >";
+                    }
+
+                    else $img="<img src='/files/banners/not_found_ban.png' width='200'>";
+
+                    $out_ban="<div style='padding: 0px 5px 0px 0px;' align='left'><a href='$url_b[$i]'>".$img."</a></div>";
+                    $out.=$out_ban;
+
+                }
+                $i++;
+
+            }
+
+
+
 		}
 	}
 	return ($out);
@@ -686,6 +696,9 @@ function out_banner_zone1()
 {
     global $conn_id, $sql_pref, $path_banners, $path;
     $date=date("Y-m-d");
+    $date1 = str_replace('-', '/', $date);
+    $tomorrow = date('Y-m-d',strtotime($date1 . "+1 days"));
+    $date = $tomorrow;
 
     $sql_query="SELECT id, descr, url, show_start, show_end FROM ".$sql_pref."_banners WHERE enable='Yes'AND zone=1 ORDER BY sort";
     $sql_res=mysql_query($sql_query, $conn_id);
@@ -694,53 +707,41 @@ function out_banner_zone1()
     {
         while (list($id, $descr, $url, $show_start, $show_end)=mysql_fetch_row($sql_res))
         {
-            if ($show_start<$date&&$show_end>$date) {
+            if ($show_start<=$date&&$show_end>$date) {
 
-            if ($id!=="" and file_exists($path."files/banners/imgs/".$id.".jpg"))
-                $img="<img src='/files/banners/imgs/".$id.".jpg' width='960' height='60' alt='".$descr."' >";
+                if (file_exists($path."files/banners/imgs/".$id.".jpg") || file_exists($path."files/banners/imgs/".$id.".gif"))
+                {
+                    if (file_exists($path."files/banners/imgs/".$id.".jpg")) $ext=".jpg";
+                    elseif (file_exists($path."files/banners/imgs/".$id.".gif")) $ext=".gif";
+                    $img="<img src='/files/banners/imgs/".$id.$ext."' width='960' height='60' alt='".$descr."' >";
+                }
+
+
+
             else $img="<img src='/files/banners/not_found_ban.png' width='200'>";
 
             $out_ban="<div style='padding: 5px 0px 0px 0px;' align='center'><a href='$url'>".$img."</a></div>";
 
         }
 
-        }
-    }
-    return ($out_ban);
-
-}
-
-
-function out_banner_zone2()
-{
-    global $conn_id, $sql_pref, $path_banners, $path;
-    $date=date("Y-m-d");
-    $sql_query="SELECT id, descr, url, show_start, show_end FROM ".$sql_pref."_banners WHERE enable='Yes'AND zone=2 ORDER BY sort";
-    $sql_res=mysql_query($sql_query, $conn_id);
-    if (mysql_num_rows($sql_res)>0)
-    {
-        while (list($id, $descr, $url, $show_start, $show_end)=mysql_fetch_row($sql_res))
-        {
-            if ($show_start<$date&&$show_end>$date) {
-
-                if ($id!=="" and file_exists($path."files/banners/imgs/".$id.".jpg"))
-                    $img="<img src='/files/banners/imgs/".$id.".jpg' width='224'  alt='".$descr."' >";
-                else $img="<img src='/files/banners/not_found_ban.png' width='200'>";
-
-                $out_ban="<div style='padding: 0px 5px 0px 0px;' align='left'><a href='$url'>".$img."</a></div>";
-
-            }
 
         }
     }
     return ($out_ban);
 
 }
+
+
 
 function out_banner_zone3()
 {
     global $conn_id, $sql_pref, $path_banners, $path;
     $date=date("Y-m-d");
+    $date1 = str_replace('-', '/', $date);
+    $tomorrow = date('Y-m-d',strtotime($date1 . "+1 days"));
+    $date = $tomorrow;
+
+    $out_ban="";
 
     $sql_query="SELECT id, descr, url, show_start, show_end FROM ".$sql_pref."_banners WHERE enable='Yes'AND zone=3 ORDER BY sort";
     $sql_res=mysql_query($sql_query, $conn_id);
@@ -749,13 +750,20 @@ function out_banner_zone3()
     {
         while (list($id, $descr, $url, $show_start, $show_end)=mysql_fetch_row($sql_res))
         {
-            if ($show_start<$date&&$show_end>$date) {
+            if ($show_start<=$date&&$show_end>$date) {
 
-                if ($id!=="" and file_exists($path."files/banners/imgs/".$id.".jpg"))
-                    $img="<img src='/files/banners/imgs/".$id.".jpg' width='460'  height='60' alt='".$descr."' >";
+                if (file_exists($path."files/banners/imgs/".$id.".jpg") || file_exists($path."files/banners/imgs/".$id.".gif"))
+                {
+                    if (file_exists($path."files/banners/imgs/".$id.".jpg")) $ext=".jpg";
+                    elseif (file_exists($path."files/banners/imgs/".$id.".gif")) $ext=".gif";
+                    $img="<img src='/files/banners/imgs/".$id.$ext."' width='460' height='60' alt='".$descr."' ></br></br>";
+                }
+
+
                 else $img="<img src='/files/banners/not_found_ban.png' width='200'>";
 
-                $out_ban="<div style='padding: 5px 0px 0px 0px;' align='center'><a href='$url'>".$img."</a></div>";
+
+                $out_ban.="<div style='padding: 5px 0px 0px 0px;' align='center'><a href='$url'>".$img."</a></div>";
 
             }
 

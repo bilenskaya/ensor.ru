@@ -202,12 +202,6 @@ function rate_main($rate_user_id,$rate_act_type,$rate_main_val,$rate_sec_val)
 
 
 
-
-
-
-
-
-
 function admin_show_rubric($rub_id)
 {
 	global $sql_pref, $conn_id, $path;
